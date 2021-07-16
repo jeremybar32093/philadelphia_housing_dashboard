@@ -43,7 +43,7 @@ PhillyHome = Base.classes.philadelphia_home_sales
 def home():
     return render_template("index.html")
 
-# api route to be able to render data using d3.json
+# api route to be able to render full dataset using d3.json
 @app.route("/api/v1.0/data")
 def data():
     # Create our session (link) from Python to the DB
