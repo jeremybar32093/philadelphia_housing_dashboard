@@ -12,6 +12,7 @@
     <form action="">
         <label for="zip">ZIP: </label>
         <select name="zip" id="zip">
+            <option value="no_selection" disabled selected value>Select a Zip Code</option>
           {% for item in zip_codes %}
             <option value="{{ item }}">{{ item[0] }}</option>
           {% endfor %}
@@ -19,6 +20,7 @@
         <br><br>
         <label for="number_bedrooms"># Bedrooms: </label>
         <select name="number_bedrooms" id="number_bedrooms">
+            <option value="no_selection" disabled selected value>Select Number of Bedrooms</option>
           {% for item in number_bedrooms %}
             <option value="{{ item }}">{{ item[0] }}</option>
           {% endfor %}
@@ -26,6 +28,7 @@
         <br><br>
         <label for="number_bathrooms"># Bathrooms: </label>
         <select name="number_bathrooms" id="number_bathrooms">
+            <option value="no_selection" disabled selected value>Select Number of Bathrooms</option>
           {% for item in number_bathrooms %}
             <option value="{{ item }}">{{ item[0] }}</option>
           {% endfor %}
@@ -33,6 +36,7 @@
         <br><br>
         <label for="total_rooms">Total # Rooms: </label>
         <select name="total_rooms" id="total_rooms">
+            <option value="no_selection" disabled selected value>Select Total Number of Rooms</option>
           {% for item in total_rooms %}
             <option value="{{ item }}">{{ item[0] }}</option>
           {% endfor %}
