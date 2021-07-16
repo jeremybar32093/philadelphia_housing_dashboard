@@ -12,6 +12,7 @@ import sqlalchemy
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
 from sqlalchemy import create_engine, func
+from sqlalchemy import desc, asc
 from flask_sqlalchemy import SQLAlchemy
 
 #################################################
@@ -41,7 +42,24 @@ PhillyHome = Base.classes.philadelphia_home_sales
 # Home route - render index.html page
 @app.route("/")
 def home():
-    return render_template("index.html")
+    # Create session to query DB to return possible dropdown values
+    session = Session(engine)
+
+    # Return unique list of zip codes to be used in filtering dropdown
+    zip_codes = session.query(PhillyHome.zip_code.distinct()).order_by(asc(PhillyHome.zip_code))
+    # Return unique list of # Bedrooms to be used in filtering dropdown
+    number_bedrooms = session.query(PhillyHome.number_of_bedrooms.distinct()).order_by(asc(PhillyHome.number_of_bedrooms))
+    # Return unique list of # Bathrooms to be used in filtering dropdown
+    number_bathrooms = session.query(PhillyHome.number_of_bathrooms.distinct()).order_by(asc(PhillyHome.number_of_bathrooms))
+    # Return unique list of total # Rooms to be used in filtering dropdown
+    total_rooms = session.query(PhillyHome.number_of_rooms.distinct()).order_by(asc(PhillyHome.number_of_rooms))
+    # Return values for sq. foot dropdowns (use buckets? i.e. <500, 500-600, et.) **NOTE: need to figure out how exactly to do this
+
+    # Close session
+    session.close()
+
+    # Render index.html template, pass in context variables for possible filtering values
+    return render_template("index.html", zip_codes=zip_codes, number_bedrooms=number_bedrooms, number_bathrooms=number_bathrooms, total_rooms=total_rooms)
 
 # api route to be able to render full dataset using d3.json
 @app.route("/api/v1.0/data")

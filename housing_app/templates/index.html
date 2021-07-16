@@ -8,6 +8,40 @@
 </head>
 <body>
     <h1>test</h1>
+    <!-- Dropdown filters -->
+    <form action="">
+        <label for="zip">ZIP: </label>
+        <select name="zip" id="zip">
+          {% for item in zip_codes %}
+            <option value="{{ item }}">{{ item[0] }}</option>
+          {% endfor %}
+        </select>
+        <br><br>
+        <label for="number_bedrooms"># Bedrooms: </label>
+        <select name="number_bedrooms" id="number_bedrooms">
+          {% for item in number_bedrooms %}
+            <option value="{{ item }}">{{ item[0] }}</option>
+          {% endfor %}
+        </select>
+        <br><br>
+        <label for="number_bathrooms"># Bathrooms: </label>
+        <select name="number_bathrooms" id="number_bathrooms">
+          {% for item in number_bathrooms %}
+            <option value="{{ item }}">{{ item[0] }}</option>
+          {% endfor %}
+        </select>
+        <br><br>
+        <label for="total_rooms">Total # Rooms: </label>
+        <select name="total_rooms" id="total_rooms">
+          {% for item in total_rooms %}
+            <option value="{{ item }}">{{ item[0] }}</option>
+          {% endfor %}
+        </select>
+        <br><br>
+        <!-- Below is placeholder for now -->
+        <input type="submit" value="Apply Filters">
+    </form>
+
 </body>
 <!-- Script for d3 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.min.js"></script>
