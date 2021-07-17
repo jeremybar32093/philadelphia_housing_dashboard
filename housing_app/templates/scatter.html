@@ -15,7 +15,7 @@
         <select name="year" id="year">
             <option value="no_selection" disabled selected value>Select a Year</option>
           {% for item in year %}
-            <option value="{{ item }}">{{ item[0] }}</option>
+            <option value="{{ item[0] }}">{{ item[0] }}</option>
           {% endfor %}
         </select>
         <br><br>
@@ -24,7 +24,7 @@
         <select name="zip_codes" id="zip_codes">
             <option value="no_selection" disabled selected value>ZIP</option>
           {% for item in zip_codes %}
-            <option value="{{ item }}">{{ item[0] }}</option>
+            <option value="{{ item[0] }}">{{ item[0] }}</option>
           {% endfor %}
         </select>
         <br><br>
@@ -33,7 +33,7 @@
         <select name="category_code" id="category_code">
             <option value="no_selection" disabled selected value>Category Code</option>
           {% for item in category_code %}
-            <option value="{{ item }}">{{ item[0] }}</option>
+            <option value="{{ item[0] }}">{{ item[0] }}</option>
           {% endfor %}
         </select>
         <br><br>
@@ -42,16 +42,16 @@
         <select name="building_code" id="building_code">
             <option value="no_selection" disabled selected value>Building Code</option>
           {% for item in building_code %}
-            <option value="{{ item }}">{{ item[0] }}</option>
+            <option value="{{ item[0] }}">{{ item[0] }}</option>
           {% endfor %}
         </select>
         <br><br>
         <!-- Filter for Basements -->
-        <label for="basements">Building Code: </label>
+        <label for="basements">Basements: </label>
         <select name="basements" id="basements">
             <option value="no_selection" disabled selected value>Basements</option>
           {% for item in basements %}
-            <option value="{{ item }}">{{ item[0] }}</option>
+            <option value="{{ item[0] }}">{{ item[0] }}</option>
           {% endfor %}
         </select>
         <br><br>
@@ -60,7 +60,7 @@
         <select name="central_air" id="central_air">
             <option value="no_selection" disabled selected value>Central Air</option>
           {% for item in central_air %}
-            <option value="{{ item }}">{{ item[0] }}</option>
+            <option value="{{ item[0] }}">{{ item[0] }}</option>
           {% endfor %}
         </select>
         <br><br>
@@ -69,7 +69,7 @@
         <select name="exterior_condition" id="exterior_condition">
             <option value="no_selection" disabled selected value>Exterior Condition</option>
           {% for item in exterior_condition %}
-            <option value="{{ item }}">{{ item[0] }}</option>
+            <option value="{{ item[0] }}">{{ item[0] }}</option>
           {% endfor %}
         </select>
         <br><br>
@@ -78,7 +78,7 @@
         <select name="garage_spaces" id="garage_spaces">
             <option value="no_selection" disabled selected value>Y/N</option>
           {% for item in garage_spaces %}
-            <option value="{{ item }}">{{ item[0] }}</option>
+            <option value="{{ item[0] }}">{{ item[0] }}</option>
           {% endfor %}
         </select>
         <br><br>
@@ -87,12 +87,16 @@
         <select name="fireplaces" id="fireplaces">
             <option value="no_selection" disabled selected value>Y/N</option>
           {% for item in fireplaces %}
-            <option value="{{ item }}">{{ item[0] }}</option>
+            <option value="{{ item[0] }}">{{ item[0] }}</option>
           {% endfor %}
         </select>
         <br><br>
         <!-- Below is placeholder for now -->
-        <input type="submit" value="Apply Filters">
+        <input id="submit" type="submit" value="Apply Filters">
     </form>
 </body>
+<!-- Script for d3 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.min.js"></script>
+<!-- Script for scatter plot -->
+<script src="{{ url_for('static', filename='js/scatter.js') }}"></script>
 </html>

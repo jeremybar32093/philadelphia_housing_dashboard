@@ -31,6 +31,22 @@ var chartGroup = svg
 var chosenXAxis = "avgPrice";
 var chosenYAxis = "frontage";
 
+// 5a.) Getting data from Flask app
+
+d3.select("#submit").on("click", function() {
+  d3.event.preventDefault();
+  var year_selected = d3.select("#year").property("value");
+  var zip_selected = d3.select("#zip_codes").property("value");
+  var ccode_selected = d3.select("#category_code").property("value");
+  var bcode_selected = d3.select("#building_code").property("value");
+  var basement_selected = d3.select("#basements").property("value");
+  var central_air_selected = d3.select("#central_air").property("value");
+  var ext_cond_selected = d3.select("#exterior_condition").property("value");
+  var garage_selected = d3.select("#garage_spaces").property("value");
+  var fireplace_selected = d3.select("#fireplaces").property("value");
+
+})
+
 // 6.) Read in JSON from API route
 const url = "api/v1.0/data"
 d3.json(url).then(function(response, err) {
@@ -38,5 +54,5 @@ d3.json(url).then(function(response, err) {
 
     // 6a.) Update datatypes to numeric
     
-    console.log(response);
+    // console.log(response);
 });
