@@ -13,7 +13,7 @@ from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
 from sqlalchemy import create_engine, func
 from sqlalchemy import desc, asc
-from flask_sqlalchemy import SQLAlchemy
+# from flask_sqlalchemy import SQLAlchemy
 
 #################################################
 # Flask Setup
@@ -122,6 +122,12 @@ def data():
 
     
     return jsonify(houses)
+
+# app.route([some route]):
+    # **Way of pulling in params from html filters - use JS to create query string**
+    # Query using sqlalchemy 
+    # d3.json
+
 
 
 
