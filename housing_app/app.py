@@ -76,12 +76,8 @@ def map():
     basements = session.query(PhillyHome.basements.distinct()).order_by(asc(PhillyHome.basements))
     central_air = session.query(PhillyHome.central_air.distinct()).order_by(asc(PhillyHome.central_air))
     exterior_condition = session.query(PhillyHome.exterior_condition.distinct()).order_by(asc(PhillyHome.exterior_condition))
-
     garage_spaces = ['Yes','No']
     fireplaces = ['Yes','No']
-    
-    # garage_spaces = session.query(PhillyHome.garage_spaces.distinct()).order_by(asc(PhillyHome.garage_spaces))
-    # fireplaces = session.query(PhillyHome.fireplaces.distinct()).order_by(asc(PhillyHome.fireplaces))
 
     # Close session
     session.close()
@@ -94,54 +90,84 @@ def map():
 def line():
     # Create session to query DB to return possible dropdown values
     session = Session(engine)
-
+    
     # Return unique list for each year directly from SQL Database
     year = session.execute("""SELECT DISTINCT
     CAST(EXTRACT(YEAR from sale_date) AS VARCHAR(4))
     from philadelphia_home_sales
     ORDER BY CAST(EXTRACT(YEAR from sale_date) AS VARCHAR(4)) DESC;""")
 
+    # Filter values from SQL Database
+    zip_codes = session.query(PhillyHome.zip_code.distinct()).order_by(asc(PhillyHome.zip_code))
+    category_code = session.query(PhillyHome.category_code_description.distinct()).order_by(asc(PhillyHome.category_code_description))
+    building_code = session.query(PhillyHome.building_code_description.distinct()).order_by(asc(PhillyHome.building_code_description))
+    basements = session.query(PhillyHome.basements.distinct()).order_by(asc(PhillyHome.basements))
+    central_air = session.query(PhillyHome.central_air.distinct()).order_by(asc(PhillyHome.central_air))
+    exterior_condition = session.query(PhillyHome.exterior_condition.distinct()).order_by(asc(PhillyHome.exterior_condition))
+    garage_spaces = ['Yes','No']
+    fireplaces = ['Yes','No']
+
     # Close session
     session.close()
 
     # Render index.html template, pass in context variables for possible filtering values
-    return render_template("line.html", year = year)
+    return render_template("line.html", year = year, zip_codes = zip_codes, category_code = category_code, building_code = building_code, basements = basements, central_air = central_air, exterior_condition = exterior_condition, garage_spaces = garage_spaces, fireplaces = fireplaces)
 
 # Comps route - render comps.html
 @app.route("/comps")
 def comps():
     # Create session to query DB to return possible dropdown values
     session = Session(engine)
-
+    
     # Return unique list for each year directly from SQL Database
     year = session.execute("""SELECT DISTINCT
     CAST(EXTRACT(YEAR from sale_date) AS VARCHAR(4))
     from philadelphia_home_sales
     ORDER BY CAST(EXTRACT(YEAR from sale_date) AS VARCHAR(4)) DESC;""")
 
+    # Filter values from SQL Database
+    zip_codes = session.query(PhillyHome.zip_code.distinct()).order_by(asc(PhillyHome.zip_code))
+    category_code = session.query(PhillyHome.category_code_description.distinct()).order_by(asc(PhillyHome.category_code_description))
+    building_code = session.query(PhillyHome.building_code_description.distinct()).order_by(asc(PhillyHome.building_code_description))
+    basements = session.query(PhillyHome.basements.distinct()).order_by(asc(PhillyHome.basements))
+    central_air = session.query(PhillyHome.central_air.distinct()).order_by(asc(PhillyHome.central_air))
+    exterior_condition = session.query(PhillyHome.exterior_condition.distinct()).order_by(asc(PhillyHome.exterior_condition))
+    garage_spaces = ['Yes','No']
+    fireplaces = ['Yes','No']
+
     # Close session
     session.close()
 
     # Render index.html template, pass in context variables for possible filtering values
-    return render_template("comps.html", year = year)
+    return render_template("comps.html", year = year, zip_codes = zip_codes, category_code = category_code, building_code = building_code, basements = basements, central_air = central_air, exterior_condition = exterior_condition, garage_spaces = garage_spaces, fireplaces = fireplaces)
 
 # Comps route - render scatter.html
 @app.route("/scatter")
 def scatter():
     # Create session to query DB to return possible dropdown values
     session = Session(engine)
-
+    
     # Return unique list for each year directly from SQL Database
     year = session.execute("""SELECT DISTINCT
     CAST(EXTRACT(YEAR from sale_date) AS VARCHAR(4))
     from philadelphia_home_sales
     ORDER BY CAST(EXTRACT(YEAR from sale_date) AS VARCHAR(4)) DESC;""")
 
+    # Filter values from SQL Database
+    zip_codes = session.query(PhillyHome.zip_code.distinct()).order_by(asc(PhillyHome.zip_code))
+    category_code = session.query(PhillyHome.category_code_description.distinct()).order_by(asc(PhillyHome.category_code_description))
+    building_code = session.query(PhillyHome.building_code_description.distinct()).order_by(asc(PhillyHome.building_code_description))
+    basements = session.query(PhillyHome.basements.distinct()).order_by(asc(PhillyHome.basements))
+    central_air = session.query(PhillyHome.central_air.distinct()).order_by(asc(PhillyHome.central_air))
+    exterior_condition = session.query(PhillyHome.exterior_condition.distinct()).order_by(asc(PhillyHome.exterior_condition))
+    garage_spaces = ['Yes','No']
+    fireplaces = ['Yes','No']
+
     # Close session
     session.close()
 
     # Render index.html template, pass in context variables for possible filtering values
-    return render_template("scatter.html", year = year)
+    return render_template("scatter.html", year = year, zip_codes = zip_codes, category_code = category_code, building_code = building_code, basements = basements, central_air = central_air, exterior_condition = exterior_condition, garage_spaces = garage_spaces, fireplaces = fireplaces)
 
 # api route to be able to render full dataset using d3.json
 @app.route("/api/v1.0/data")
