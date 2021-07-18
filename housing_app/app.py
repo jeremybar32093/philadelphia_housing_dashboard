@@ -172,11 +172,89 @@ def scatter():
 # api route to be able to render full dataset using d3.json
 @app.route("/api/v1.0/data")
 def data():
+    filter_query = request.query_string
+    
     # Create our session (link) from Python to the DB
     session = Session(engine)
 
-    # Query based on the PhillyHome table class defined above
-    results = session.query(PhillyHome).all()
+    if filter_query == '':
+        # Query based on the PhillyHome table class defined above
+        results = session.query(PhillyHome).all()
+
+    else:
+        year_selected = request.args.get('year')
+        if year_selected.strip() == 'no_selection':
+            year_query = '1=1'
+        else:
+            year_query = f"CAST(EXTRACT(YEAR from sale_date) AS VARCHAR(4))='{year_selected.strip()}'"
+
+        zip_selected = request.args.get('zip_codes')
+        if zip_selected.strip() == 'no_selection':
+            zip_query = '1=1'
+        else:
+            zip_query = f"zip_code = '{zip_selected}'"
+
+        ccode_selected = request.args.get('category_code')
+        if ccode_selected.strip() == 'no_selection':
+            ccode_query = '1=1'
+        else:
+            ccode_query = f"category_code_description = '{ccode_selected.strip()}'"
+
+        bcode_selected = request.args.get('building_code')
+        if bcode_selected.strip() == 'no_selection':
+            bcode_query = '1=1'
+        else:
+            bcode_query = f"building_code_description = '{bcode_selected.strip()}'"
+
+        basement_selected = request.args.get('basements')
+        if basement_selected.strip() == 'no_selection':
+            basement_query = '1=1'
+        else:
+            basement_query = f"basements = '{bcode_selected.strip()}'"
+
+        central_air_selected = request.args.get('central_air')
+        if central_air_selected.strip() == 'no_selection':
+            air_query = '1=1'
+        else:
+            air_query = f"central_air = '{central_air_selected.strip()}'"
+
+        ext_cond_selected = request.args.get('exterior_condition')
+        if ext_cond_selected.strip() == 'no_selection':
+            ext_query = '1=1'
+        else:
+            ext_query = f"exterior_condition = '{ext_cond_selected}'"
+
+        garage_selected = request.args.get('garage_spaces')
+        if garage_selected.strip() == 'no_selection':
+            garage_query = '1=1'
+        else:
+            if garage_selected.strip() == 'Y':
+                garage_query = f"garage_spaces > 0"
+            else:
+                garage_query = 'garage_spaces = 0'
+
+        fireplace_selected = request.args.get('fireplaces')
+        if fireplace_selected.strip() == 'no_selection':
+            fireplace_query = '1=1'
+        else:
+            if fireplace_selected.strip() == 'Y':
+                fireplace_query = f"fireplaces > 0"
+            else:
+                fireplace_query = f"fireplaces = 0"
+
+        sql_query = f"""SELECT * FROM philadelphia_home_sales 
+        WHERE {year_query} 
+        AND {zip_query} 
+        AND {ccode_query} 
+        AND {bcode_query} 
+        AND {basement_query} 
+        AND {air_query} 
+        AND {ext_query} 
+        AND {garage_query} 
+        AND {fireplace_query}"""
+
+        print(sql_query)
+        results = session.execute(sql_query).all()
 
     # Close session
     session.close()
@@ -188,6 +266,7 @@ def data():
         houses_dict["id"] = result.id
         houses_dict["basements"] = result.basements
         houses_dict["building_code_description"] = result.building_code_description
+        houses_dict["category_code_description"] = result.category_code_description
         houses_dict["census_tract"] = result.census_tract
         houses_dict["central_air"] = result.central_air
         houses_dict["depth"] = result.depth
@@ -228,14 +307,11 @@ def data():
 
         houses.append(houses_dict)
 
-    
     return jsonify(houses)
 
-# app.route([some route]):
-    # **Way of pulling in params from html filters - use JS to create query string**
-    # Query using sqlalchemy 
-    # d3.json
-
+#     **Way of pulling in params from html filters - use JS to create query string**
+#     Query using sqlalchemy 
+#     d3.json
 
 
 

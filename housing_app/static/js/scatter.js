@@ -32,6 +32,7 @@ var chosenXAxis = "avgPrice";
 var chosenYAxis = "frontage";
 
 // 5a.) Getting data from Flask app
+var query_url;
 
 d3.select("#submit").on("click", function() {
   d3.event.preventDefault();
@@ -45,14 +46,23 @@ d3.select("#submit").on("click", function() {
   var garage_selected = d3.select("#garage_spaces").property("value");
   var fireplace_selected = d3.select("#fireplaces").property("value");
 
+  var query_url = `?year=${year_selected}
+  &zip_codes=${zip_selected}
+  &category_code=${ccode_selected}
+  &building_code=${bcode_selected}
+  &basements=${basement_selected}
+  &central_air=${central_air_selected}
+  &exterior_condition=${ext_cond_selected}
+  &garage_spaces=${garage_selected}
+  &fireplaces=${fireplace_selected}`;
+
+  // 6.) Read in JSON from API route
+  const url = `api/v1.0/data${query_url}`
+  d3.json(url).then(function(response, err) {
+      if (err) throw err;
+
+      // 6a.) Update datatypes to numeric
+      console.log(response);
+  });
+  return query_url;
 })
-
-// 6.) Read in JSON from API route
-const url = "api/v1.0/data"
-d3.json(url).then(function(response, err) {
-    if (err) throw err;
-
-    // 6a.) Update datatypes to numeric
-    
-    // console.log(response);
-});
