@@ -18,13 +18,13 @@ from sqlalchemy import desc, asc
 #################################################
 # Flask Setup
 #################################################
-app = Flask(__name__)
+application = Flask(__name__)
 
 #################################################
 # Database Setup
 #################################################
 # Set up database engine - NOTE: will need to update connection string once postgreSQL in the cloud is running
-engine = create_engine("postgresql://postgres:postgres@localhost:5432/housing_db")
+engine = create_engine("postgresql://postgres:postgres@bootcamp.clwg1d6bpji9.us-east-2.rds.amazonaws.com:5432/housing_db")
 
 # reflect an existing database into a new model
 Base = automap_base()
@@ -40,7 +40,7 @@ PhillyHome = Base.classes.philadelphia_home_sales
 #################################################
 
 # Home route - render index.html page
-@app.route("/")
+@application.route("/")
 def home():
     # Create session to query DB to return possible dropdown values
     session = Session(engine)
@@ -58,7 +58,7 @@ def home():
     return render_template("index.html", year = year)
 
 # Map route - render map.html
-@app.route("/map")
+@application.route("/map")
 def map():
     # Create session to query DB to return possible dropdown values
     session = Session(engine)
@@ -86,7 +86,7 @@ def map():
     return render_template("map.html", year = year, zip_codes = zip_codes, category_code = category_code, building_code = building_code, basements = basements, central_air = central_air, exterior_condition = exterior_condition, garage_spaces = garage_spaces, fireplaces = fireplaces)
 
 # Line route - render line.html
-@app.route("/line")
+@application.route("/line")
 def line():
     # Create session to query DB to return possible dropdown values
     session = Session(engine)
@@ -114,7 +114,7 @@ def line():
     return render_template("line.html", year = year, zip_codes = zip_codes, category_code = category_code, building_code = building_code, basements = basements, central_air = central_air, exterior_condition = exterior_condition, garage_spaces = garage_spaces, fireplaces = fireplaces)
 
 # Comps route - render comps.html
-@app.route("/comps")
+@application.route("/comps")
 def comps():
     # Create session to query DB to return possible dropdown values
     session = Session(engine)
@@ -142,7 +142,7 @@ def comps():
     return render_template("comps.html", year = year, zip_codes = zip_codes, category_code = category_code, building_code = building_code, basements = basements, central_air = central_air, exterior_condition = exterior_condition, garage_spaces = garage_spaces, fireplaces = fireplaces)
 
 # Comps route - render scatter.html
-@app.route("/scatter")
+@application.route("/scatter")
 def scatter():
     # Create session to query DB to return possible dropdown values
     session = Session(engine)
@@ -170,7 +170,7 @@ def scatter():
     return render_template("scatter.html", year = year, zip_codes = zip_codes, category_code = category_code, building_code = building_code, basements = basements, central_air = central_air, exterior_condition = exterior_condition, garage_spaces = garage_spaces, fireplaces = fireplaces)
 
 # api route to be able to render full dataset using d3.json
-@app.route("/api/v1.0/data")
+@application.route("/api/v1.0/data")
 def data():
     filter_query = request.query_string
     
@@ -324,5 +324,5 @@ def data():
 # Run flask app
 #################################################
 if __name__ == '__main__':
-    app.run(debug=True)
+    application.run(debug=True)
 
