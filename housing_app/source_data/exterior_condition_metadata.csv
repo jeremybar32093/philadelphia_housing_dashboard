@@ -1,8 +1,8 @@
-﻿ID,Value
-NA,Not Applicable
-2,Newer Construction / Rehabbed
-3,Above Average
-4,Average
-5,Below Average
-6,Vacant
-7,Sealed
+﻿rec_id,rec_value,rec_value_desc
+0,Not Applicable,
+2,Newer Construction / Rehabbed,"Noticeably newer construction then surrounding properties in the GMA. Property is superior to most other properties on the block. Usually the following exterior improvements can be observed. New full or partial brick or other material front. New windows, doors. New concrete sidewalks, steps, porch, patio or decks. 4If you are not certain, use Above Average"
+3,Above Average,A well-maintained property where the owner does preventive maintenance on an ongoing basis and reacts to any deferred maintenance as it starts to occur. Exterior physical condition is better than average and less than REHABILITATED.
+4,Average,"This is the typical and most common physical condition observed at the exterior of most properties on the subject block. No significant concrete work, pointing, painting, carpentry or work to trim exterior walls, doors, windows or bay is required. No obvious defects. Majority of properties in the block or GMA are in this condition."
+5,Below Average,"Excessive deferred maintenance, wear and tear, abuse, and/or minor vandalism, or unrepaired minor fire damage. These items are starting to add up and take their toll."
+6,Vacant,"No occupancy. FHA, VA, FNMA signs may be on the property. Property has been secured with fresh plywood over doors and windows."
+7,Sealed / Structurally Compromised,"Open to the Weather – Doors and windows have been covered over by plywood, tin, concrete block or Stucco. No interior access. Some or no windows, no door or door open, evidence of past abuse by vandals such as graffiti, missing railings, deteriorated wood and metal, etc. Scorch marks and/or fire and water damage to exterior brick, siding, bays, etc. Broken windows with blackened and charred interior."
