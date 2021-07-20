@@ -1,0 +1,12 @@
+﻿rb_id,rb_value,rb_value_desc
+0,None,Indicates no basement.
+A,Full Finished,Occupies the entire area under the first floor.
+B,Full Semi-Finished,Could have some finish to include a floor covering and ceiling. It looks more like a living area rather than a basement.
+C,Full Unfinished,"Is a typical basement with unfinished concrete floor, either rubble stone or cement over stone or concrete walls and would have exposed wood joist ceilings."
+D,Full - Unknown Finish,
+E,Partial Finished,Occupies a portion under the first floor. Be careful of areas under sheds and porches. If there is a garage at basement level then it is a partial basement.
+F,Partial Semi-Finished,One or more finished areas.
+G,Partial Unfinished,
+H,Partial - Unknown Finish,
+I,Unknown Size - Finished,
+J,Unknown Size - Unfinished,
