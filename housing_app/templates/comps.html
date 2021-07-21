@@ -1,277 +1,303 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<head>
     <title>Comparison Analysis</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta charset="UTF-8" />
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
     <!-- Link to css files -->
     <link rel="stylesheet" href="../static/css/comps.css" />
-    <link rel="stylesheet" href="../static/css/dashboard.css" />
-    <link rel="stylesheet" href="../static/css/dashboard-pages.css" />
+
+    <link rel="stylesheet" href="../static/css/dashboard.css">
+
+    <link rel="stylesheet" href="../static/css/dashboard-pages.css">
 
     <!--Fonts-->
-    <link rel="stylesheet" href="https://use.typekit.net/tmf5pjw.css" />
-    <link
-      href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet"
-    />
-  </head>
+    <link rel="stylesheet" href="https://use.typekit.net/tmf5pjw.css">
 
-  <body class="preload">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+</head>
+
+<body class="preload">
+
     <header class="header">
-      <button class="header_button" id="btnNav" type="button">
-        <i class="material-icons">menu</i>
-      </button>
+        <button class="header_button" id="btnNav" type="button">
+            <i class="material-icons">menu</i>
+        </button>
     </header>
 
     <!--NAV BAR-->
     <nav class="nav">
-      <div class="nav_links">
-        <a class="nav_link nav_link-active" href="dashboard"> Dashboard </a>
-        <a href="comps.html" class="nav_link"> Comps Analysis </a>
-        <a class="nav_link" href="scatter"> Scatter Plot </a>
-        <a class="nav_link" href="line"> Line Chart </a>
-        <a class="nav_link" href="maps"> Map </a>
-      </div>
-      <div class="nav_overlay"></div>
+        <div class="nav_links">
+            <a class="nav_link nav_link-active" href="index.html"> Dashboard </a>
+            <a href="comps.html" class="nav_link"> Comps Analysis </a>
+            <a class="nav_link" href="scatter.html"> Scatter Plot </a>
+            <a class="nav_link" href="line.html"> Line Chart </a>
+            <a class="nav_link" href="map.html"> Map </a>
+        </div>
+        <div class="nav_overlay"></div>
     </nav>
 
     <main>
-      <h2>
-        Comp Analysis
-        <br />
-        Select attributes to filter and review recent comparable property sales
-      </h2>
+        <h2>Comp Analysis</h2>
+        <p>Select attributes to filter and review recent comparable property sales</p>
     </main>
-    <!-- Dropdown filter -->
-    <form action="">
-      <!-- Filter for Year -->
-      <label for="year">Year: </label>
-      <select name="year" id="year">
-        <option value="no_selection" selected value>All Years</option>
-        {% for item in year %}
-        <option value="{{ item[0] }}">{{ item[0] }}</option>
-        {% endfor %}
-      </select>
-      <br /><br />
-      <!-- Filter for Zip Code -->
-      <label for="zip_codes">Zip Code: </label>
-      <select name="zip_codes" id="zip_codes">
-        <option value="no_selection" selected value>All Zip Codes</option>
-        {% for item in zip_codes %}
-        <option value="{{ item[0] }}">{{ item[0] }}</option>
-        {% endfor %}
-      </select>
-      <br /><br />
-      <!-- Filter for Category Code -->
-      <label for="category_code">Category Code: </label>
-      <select name="category_code" id="category_code">
-        <option value="no_selection" selected value>All Category Codes</option>
-        {% for item in category_code %}
-        <option value="{{ item[0] }}">{{ item[0] }}</option>
-        {% endfor %}
-      </select>
-      <br /><br />
-      <!-- Filter for Building Code -->
-      <label for="building_code">Building Code: </label>
-      <select name="building_code" id="building_code">
-        <option value="no_selection" selected value>All Building Codes</option>
-        {% for item in building_code %}
-        <option value="{{ item[0] }}">{{ item[0] }}</option>
-        {% endfor %}
-      </select>
-      <br /><br />
-      <!-- Filter for Basements -->
-      <label for="basements">Basement type: </label>
-      <select name="basements" id="basements">
-        <option value="no_selection" selected value>All Basement Types</option>
-        {% for item in basements %}
-        <option value="{{ item[0] }}">{{ item[0] }}</option>
-        {% endfor %}
-      </select>
-      <br /><br />
-      <!-- Filter for Central Air -->
-      <label for="central_air">Central Air: </label>
-      <select name="central_air" id="central_air">
-        <option value="no_selection" selected value>All Central Air</option>
-        {% for item in central_air %}
-        <option value="{{ item[0] }}">{{ item[0] }}</option>
-        {% endfor %}
-      </select>
-      <br /><br />
-      <!-- Filter for Exterior Condition -->
-      <label for="exterior_condition">Exterior Condition: </label>
-      <select name="exterior_condition" id="exterior_condition">
-        <option value="no_selection" selected value>
-          All Exterior Conditions
-        </option>
-        {% for item in exterior_condition %}
-        <option value="{{ item[0] }}">{{ item[0] }}</option>
-        {% endfor %}
-      </select>
-      <br /><br />
-      <!-- Filter for Garage Spaces -->
-      <label for="garage_spaces">Garage Spaces: </label>
-      <select name="garage_spaces" id="garage_spaces">
-        <option value="no_selection" selected value>Y/N</option>
-        {% for item in garage_spaces %}
-        <option value="{{ item[0] }}">{{ item[0] }}</option>
-        {% endfor %}
-      </select>
-      <br /><br />
-      <!-- Filter for Fireplaces -->
-      <label for="fireplaces">Fireplaces: </label>
-      <select name="fireplaces" id="fireplaces">
-        <option value="no_selection" selected value>Y/N</option>
-        {% for item in fireplaces %}
-        <option value="{{ item[0] }}">{{ item[0] }}</option>
-        {% endfor %}
-      </select>
-      <br /><br />
-      <!-- Below is placeholder for now -->
-      <input id="submit" type="submit" value="Apply Filters" />
-    </form>
 
-    <div id="comp-results" class="hide">
-      <!-- Comp result list -->
-      <div id="comp-result-1">
-        <h3>Comp 1: <span>[dynamic address]</span></h3>
-        <!-- Unordered list for comp result attributes -->
-        <ul>
-          <li class="comp-result-sale-date">
-            Sale Date: <span>[dynamic content]</span>
-          </li>
-          <li class="comp-result-sale-price">
-            Sale Price: <span>[dynamic content]</span>
-          </li>
-          <li class="comp-result-total-rooms">
-            Total Rooms: <span>[dynamic content]</span>
-          </li>
-          <li class="comp-result-bedrooms">
-            Bedrooms: <span>[dynamic content]</span>
-          </li>
-          <li class="comp-result-bathrooms">
-            Bathrooms: <span>[dynamic content]</span>
-          </li>
-          <li class="comp-result-sq-ft">
-            Square footage: <span>[dynamic content]</span>
-          </li>
-          <li class="comp-result-age">Age: <span>[dynamic content]</span></li>
-        </ul>
-      </div>
-      <div id="comp-result-2">
-        <h3>Comp 2: <span>[dynamic address]</span></h3>
-        <!-- Unordered list for comp result attributes -->
-        <ul>
-          <li class="comp-result-sale-date">
-            Sale Date: <span>[dynamic content]</span>
-          </li>
-          <li class="comp-result-sale-price">
-            Sale Price: <span>[dynamic content]</span>
-          </li>
-          <li class="comp-result-total-rooms">
-            Total Rooms: <span>[dynamic content]</span>
-          </li>
-          <li class="comp-result-bedrooms">
-            Bedrooms: <span>[dynamic content]</span>
-          </li>
-          <li class="comp-result-bathrooms">
-            Bathrooms: <span>[dynamic content]</span>
-          </li>
-          <li class="comp-result-sq-ft">
-            Square Footage: <span>[dynamic content]</span>
-          </li>
-          <li class="comp-result-age">Age: <span>[dynamic content]</span></li>
-        </ul>
-      </div>
-      <!-- </div> -->
-      <div id="comp-result-3">
-        <h3>Comp 3: <span>[dynamic address]</span></h3>
-        <!-- Unordered list for comp result attributes -->
-        <ul>
-          <li class="comp-result-sale-date">
-            Sale Date: <span>[dynamic content]</span>
-          </li>
-          <li class="comp-result-sale-price">
-            Sale Price: <span>[dynamic content]</span>
-          </li>
-          <li class="comp-result-total-rooms">
-            Total Rooms: <span>[dynamic content]</span>
-          </li>
-          <li class="comp-result-bedrooms">
-            Bedrooms: <span>[dynamic content]</span>
-          </li>
-          <li class="comp-result-bathrooms">
-            Bathrooms: <span>[dynamic content]</span>
-          </li>
-          <li class="comp-result-sq-ft">
-            Square footage: <span>[dynamic content]</span>
-          </li>
-          <li class="comp-result-age">Age: <span>[dynamic content]</span></li>
-        </ul>
-      </div>
-      <div id="comp-result-4">
-        <h3>Comp 4: <span>[dynamic address]</span></h3>
-        <!-- Unordered list for comp result attributes -->
-        <ul>
-          <li class="comp-result-sale-date">
-            Sale Date: <span>[dynamic content]</span>
-          </li>
-          <li class="comp-result-sale-price">
-            Sale Price: <span>[dynamic content]</span>
-          </li>
-          <li class="comp-result-total-rooms">
-            Total Rooms: <span>[dynamic content]</span>
-          </li>
-          <li class="comp-result-bedrooms">
-            Bedrooms: <span>[dynamic content]</span>
-          </li>
-          <li class="comp-result-bathrooms">
-            Bathrooms: <span>[dynamic content]</span>
-          </li>
-          <li class="comp-result-sq-ft">
-            Square footage: <span>[dynamic content]</span>
-          </li>
-          <li class="comp-result-age">Age: <span>[dynamic content]</span></li>
-        </ul>
-      </div>
-      <div id="comp-result-5">
-        <h3>Comp 5: <span>[dynamic address]</span></h3>
-        <!-- Unordered list for comp result attributes -->
-        <ul>
-          <li class="comp-result-sale-date">
-            Sale Date: <span>[dynamic content]</span>
-          </li>
-          <li class="comp-result-sale-price">
-            Sale Price: <span>[dynamic content]</span>
-          </li>
-          <li class="comp-result-total-rooms">
-            Total Rooms: <span>[dynamic content]</span>
-          </li>
-          <li class="comp-result-bedrooms">
-            Bedrooms: <span>[dynamic content]</span>
-          </li>
-          <li class="comp-result-bathrooms">
-            Bathrooms: <span>[dynamic content]</span>
-          </li>
-          <li class="comp-result-sq-ft">
-            Square footage: <span>[dynamic content]</span>
-          </li>
-          <li class="comp-result-age">Age: <span>[dynamic content]</span></li>
-        </ul>
-      </div>
-      <div id="comp-avg-price">
-        <h3>Comp Average Price: <span>[dynamic content]</span></h3>
-      </div>
+    <div class="flexbox">
+        <div class="content-flexbox one">
+            <!-- Dropdown filter -->
+            <form action="">
+                <!-- Filter for Year -->
+                <label for="year">Year: </label>
+                <select name="year" id="year">
+                    <option value="no_selection" selected value>All Years</option>
+                    {% for item in year %}
+                    <option value="{{ item[0] }}">{{ item[0] }}</option>
+                    {% endfor %}
+                </select>
+                <br /><br />
+
+                <!-- Filter for Zip Code -->
+                <label for="zip_codes">Zip Code: </label>
+                <select name="zip_codes" id="zip_codes">
+                    <option value="no_selection" selected value>All Zip Codes</option>
+                    {% for item in zip_codes %}
+                    <option value="{{ item[0] }}">{{ item[0] }}</option>
+                    {% endfor %}
+                </select>
+                <br /><br />
+
+                <!-- Filter for Category Code -->
+                <label for="category_code">Category Code: </label>
+                <select name="category_code" id="category_code">
+                    <option value="no_selection" selected value>All Category Codes</option>
+                    {% for item in category_code %}
+                    <option value="{{ item[0] }}">{{ item[0] }}</option>
+                    {% endfor %}
+                </select>
+                <br /><br />
+
+                <!-- Filter for Building Code -->
+                <label for="building_code">Building Code: </label>
+                <select name="building_code" id="building_code">
+                    <option value="no_selection" selected value>All Building Codes</option>
+                    {% for item in building_code %}
+                    <option value="{{ item[0] }}">{{ item[0] }}</option>
+                    {% endfor %}
+                </select>
+                <br /><br />
+
+                <!-- Filter for Basements -->
+                <label for="basements">Basement type: </label>
+                <select name="basements" id="basements">
+                    <option value="no_selection" selected value>All Basement Types</option>
+                    {% for item in basements %}
+                    <option value="{{ item[0] }}">{{ item[0] }}</option>
+                    {% endfor %}
+                </select>
+                <br /><br />
+
+                <!-- Filter for Central Air -->
+                <label for="central_air">Central Air: </label>
+                <select name="central_air" id="central_air">
+                    <option value="no_selection" selected value>All Central Air</option>
+                    {% for item in central_air %}
+                    <option value="{{ item[0] }}">{{ item[0] }}</option>
+                    {% endfor %}
+                </select>
+                <br /><br />
+
+                <!-- Filter for Exterior Condition -->
+                <label for="exterior_condition">Exterior Condition: </label>
+                <select name="exterior_condition" id="exterior_condition">
+                    <option value="no_selection" selected value>
+                        All Exterior Conditions
+                    </option>
+                    {% for item in exterior_condition %}
+                    <option value="{{ item[0] }}">{{ item[0] }}</option>
+                    {% endfor %}
+                </select>
+                <br /><br />
+
+                <!-- Filter for Garage Spaces -->
+                <label for="garage_spaces">Garage Spaces: </label>
+                <select name="garage_spaces" id="garage_spaces">
+                    <option value="no_selection" selected value>Y/N</option>
+                    {% for item in garage_spaces %}
+                    <option value="{{ item[0] }}">{{ item[0] }}</option>
+                    {% endfor %}
+                </select>
+                <br /><br />
+
+                <!-- Filter for Fireplaces -->
+                <label for="fireplaces">Fireplaces: </label>
+                <select name="fireplaces" id="fireplaces">
+                    <option value="no_selection" selected value>Y/N</option>
+                    {% for item in fireplaces %}
+                    <option value="{{ item[0] }}">{{ item[0] }}</option>
+                    {% endfor %}
+                </select>
+                <br /><br />
+
+                <!-- Below is placeholder for now -->
+                <input id="submit" type="submit" value="Apply Filters" />
+            </form>
+        </div>
+
+        <div class="content-flexbox two">
+            <div id="comp-results" class="hide">
+                <!-- Comp result list -->
+                <div id="comp-result-1">
+                    <h3>Comp 1: <span>[dynamic address]</span></h3>
+                    <!-- Unordered list for comp result attributes -->
+                    <ul>
+                        <li class="comp-result-sale-date">
+                            Sale Date: <span>[dynamic content]</span>
+                        </li>
+                        <li class="comp-result-sale-price">
+                            Sale Price: <span>[dynamic content]</span>
+                        </li>
+                        <li class="comp-result-total-rooms">
+                            Total Rooms: <span>[dynamic content]</span>
+                        </li>
+                        <li class="comp-result-bedrooms">
+                            Bedrooms: <span>[dynamic content]</span>
+                        </li>
+                        <li class="comp-result-bathrooms">
+                            Bathrooms: <span>[dynamic content]</span>
+                        </li>
+                        <li class="comp-result-sq-ft">
+                            Square footage: <span>[dynamic content]</span>
+                        </li>
+                        <li class="comp-result-age">Age: <span>[dynamic content]</span></li>
+                    </ul>
+                </div>
+                <div id="comp-result-2">
+                    <h3>Comp 2: <span>[dynamic address]</span></h3>
+                    <!-- Unordered list for comp result attributes -->
+                    <ul>
+                        <li class="comp-result-sale-date">
+                            Sale Date: <span>[dynamic content]</span>
+                        </li>
+                        <li class="comp-result-sale-price">
+                            Sale Price: <span>[dynamic content]</span>
+                        </li>
+                        <li class="comp-result-total-rooms">
+                            Total Rooms: <span>[dynamic content]</span>
+                        </li>
+                        <li class="comp-result-bedrooms">
+                            Bedrooms: <span>[dynamic content]</span>
+                        </li>
+                        <li class="comp-result-bathrooms">
+                            Bathrooms: <span>[dynamic content]</span>
+                        </li>
+                        <li class="comp-result-sq-ft">
+                            Square Footage: <span>[dynamic content]</span>
+                        </li>
+                        <li class="comp-result-age">Age: <span>[dynamic content]</span></li>
+                    </ul>
+                </div>
+
+                <!-- </div> -->
+                <div id="comp-result-3">
+                    <h3>Comp 3: <span>[dynamic address]</span></h3>
+                    <!-- Unordered list for comp result attributes -->
+                    <ul>
+                        <li class="comp-result-sale-date">
+                            Sale Date: <span>[dynamic content]</span>
+                        </li>
+                        <li class="comp-result-sale-price">
+                            Sale Price: <span>[dynamic content]</span>
+                        </li>
+                        <li class="comp-result-total-rooms">
+                            Total Rooms: <span>[dynamic content]</span>
+                        </li>
+                        <li class="comp-result-bedrooms">
+                            Bedrooms: <span>[dynamic content]</span>
+                        </li>
+                        <li class="comp-result-bathrooms">
+                            Bathrooms: <span>[dynamic content]</span>
+                        </li>
+                        <li class="comp-result-sq-ft">
+                            Square footage: <span>[dynamic content]</span>
+                        </li>
+                        <li class="comp-result-age">Age: <span>[dynamic content]</span></li>
+                    </ul>
+                </div>
+                <div id="comp-result-4">
+                    <h3>Comp 4: <span>[dynamic address]</span></h3>
+                    <!-- Unordered list for comp result attributes -->
+                    <ul>
+                        <li class="comp-result-sale-date">
+                            Sale Date: <span>[dynamic content]</span>
+                        </li>
+                        <li class="comp-result-sale-price">
+                            Sale Price: <span>[dynamic content]</span>
+                        </li>
+                        <li class="comp-result-total-rooms">
+                            Total Rooms: <span>[dynamic content]</span>
+                        </li>
+                        <li class="comp-result-bedrooms">
+                            Bedrooms: <span>[dynamic content]</span>
+                        </li>
+                        <li class="comp-result-bathrooms">
+                            Bathrooms: <span>[dynamic content]</span>
+                        </li>
+                        <li class="comp-result-sq-ft">
+                            Square footage: <span>[dynamic content]</span>
+                        </li>
+                        <li class="comp-result-age">Age: <span>[dynamic content]</span></li>
+                    </ul>
+                </div>
+                <div id="comp-result-5">
+                    <h3>Comp 5: <span>[dynamic address]</span></h3>
+                    <!-- Unordered list for comp result attributes -->
+                    <ul>
+                        <li class="comp-result-sale-date">
+                            Sale Date: <span>[dynamic content]</span>
+                        </li>
+                        <li class="comp-result-sale-price">
+                            Sale Price: <span>[dynamic content]</span>
+                        </li>
+                        <li class="comp-result-total-rooms">
+                            Total Rooms: <span>[dynamic content]</span>
+                        </li>
+                        <li class="comp-result-bedrooms">
+                            Bedrooms: <span>[dynamic content]</span>
+                        </li>
+                        <li class="comp-result-bathrooms">
+                            Bathrooms: <span>[dynamic content]</span>
+                        </li>
+                        <li class="comp-result-sq-ft">
+                            Square footage: <span>[dynamic content]</span>
+                        </li>
+                        <li class="comp-result-age">Age: <span>[dynamic content]</span></li>
+                    </ul>
+                </div>
+                <div id="comp-avg-price">
+                    <h3>Comp Average Price: <span>[dynamic content]</span></h3>
+                </div>
+            </div>
+        </div>
     </div>
+
+</body>
+
+<!-- Script for d3 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.min.js"></script>
+
+<!-- Script for comp analysis -->
+<script src="{{ url_for('static', filename='js/comps.js') }}"></script>
+
+<!-- Script for layout js elements -->
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
     
-  </body>
-  <!-- Script for d3 -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.min.js"></script>
-  <!-- Script for comp analysis -->
-  <script src="{{ url_for('static', filename='js/comps.js') }}"></script>
-  <!-- Script for layout js elements -->
-  <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+<script src="../static/js/dashboard.js"></script>
+
 </html>
