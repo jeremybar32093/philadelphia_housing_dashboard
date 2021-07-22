@@ -254,7 +254,7 @@ def data():
         AND {fireplace_query}"""
 
         print(sql_query)
-        results = session.execute(sql_query).all()
+        results = session.execute(sql_query)
 
     # Close session
     session.close()

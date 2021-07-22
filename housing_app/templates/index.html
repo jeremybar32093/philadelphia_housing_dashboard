@@ -6,7 +6,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
@@ -51,7 +51,7 @@
 
     <main>
         <h2>Dashboard</h2>
-        <p>Some info about the dashboard?</p>
+        <p>Welcome to the Philadelphia Housing Dashboard application! This site aims to provide insights into the Philadelphia Housing Market and identify potential areas for investment!</p>
     </main>
 
     <div class="flexbox">
@@ -61,9 +61,9 @@
             <form action="">
                 <label for="year">Year: </label>
                 <select name="year" id="year">
-                    <option value="no_selection" disabled selected value>Select a Year</option>
+                    <!-- <option value="no_selection" disabled selected value>Select a Year</option> -->
                     {% for item in year %}
-                    <option value="{{ item }}">{{ item[0] }}</option>
+                    <option value="{{ item[0] }}">{{ item[0] }}</option>
                     {% endfor %}
                 </select>
                 <br><br>
@@ -73,27 +73,69 @@
 
         </div>
         
-        <!--<div class="content-flexbox two">
-            2
+        <div class="content-flexbox two" id="total-home-count">
+            <p>Total Homes Sold: <span></span></p>
         </div>
-        <div class="content-flexbox three">
-            3
+        <div class="content-flexbox three" id="summary-stats-price">
+            <p id="summary-stat-mean">Mean: <span></span></p>
+            <p id="summary-stat-median">Median: <span></span></p>
+            <p id="summary-stat-stdev">Standard Deviation: <span></span></p>
+            <p id="summary-stat-min">Minimum: <span></span></p>
+            <p id="summary-stat-max">Maximum: <span></span></p>
         </div>
-        <div class="content-flexbox four">
+        <div class="content-flexbox four" id="pie-chart-home-age">
             4
-        </div>-->
+        </div>
+        <div class="content-flexbox five" id="total-dollars-exchanged">
+            <p>Total $ Exchanged: <span></span></p>
+        </div>
+        <div class="content-flexbox six">
+            6
+        </div>
+        <div class="content-flexbox seven" id="top5zip">
+            <p>Zip Code Top 5</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Zip Code</th>
+                        <th>Number of Sales</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr id="top-zip-1">
+                        <td class="column-1"></td>
+                        <td class="column-2"></td>
+                    </tr>
+                    <tr id="top-zip-2">
+                        <td class="column-1"></td>
+                        <td class="column-2"></td>
+                    </tr>
+                    <tr id="top-zip-3">
+                        <td class="column-1"></td>
+                        <td class="column-2"></td>
+                    </tr>
+                    <tr id="top-zip-4">
+                        <td class="column-1"></td>
+                        <td class="column-2"></td>
+                    </tr>
+                    <tr id="top-zip-5">
+                        <td class="column-1"></td>
+                        <td class="column-2"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-
-    <h1>test</h1>
 
 
 
 </body>
 
 <!-- Scripts -->
-<script src="../static/js/dashboard.js"></script>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.min.js"></script>
+<script src="../static/js/dashboard.js"></script>
+<script src="../static/js/dashboard_calcs.js"></script>
+
 
 <!-- Script for scatter plot -->
 <!--<script src="{{ url_for('static', filename='js/scatter.js') }}"></script>-->
