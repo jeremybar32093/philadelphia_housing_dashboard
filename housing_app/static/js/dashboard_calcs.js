@@ -31,6 +31,9 @@ function getQueryString() {
 // 2.) Define function to execute to refresh data in dashboard items
 function handleClick() {
 
+  // Enable slickloader
+  SlickLoader.enable();
+
   // 2a.) Create query string based off of selected filters - see getQueryString() function from step 1
   query_string = getQueryString();
 
@@ -39,42 +42,133 @@ function handleClick() {
     
     console.log(response);
 
-    // 2bi.) Display total number of home sales - calculate by simply taking the length of the response array  (# of records)
-    var totalHomeCount = d3.select("#total-home-count span");
-    totalHomeCount.text(response.length)
+    // Declare formatting to be used in final number format outputs
+    var formatComma = d3.format(",");
 
+    // -------------------------------------------------------------------------------------------
+    // 2bi.) Display total number of home sales - calculate by simply taking the length of the response array  (# of records)
+
+    var totalHomeCount = d3.select("#total-home-count span");
+    totalHomeCount.text(formatComma(response.length));
+    // -------------------------------------------------------------------------------------------
+
+    // -------------------------------------------------------------------------------------------
     // 2bii.) Get array of prices only to calculate summary statistics
     var prices = response.map(price => price.sale_price);
     // Calculte summary statistics using d3 and render html
     mean_price = d3.mean(prices);
     var meanPriceHTML = d3.select("#summary-stats-price #summary-stat-mean span");
-    meanPriceHTML.text(mean_price);
+    meanPriceHTML.text(`$${formatComma(Math.round(mean_price))}`);
 
     median_price = d3.median(prices);
     var medianPriceHTML = d3.select("#summary-stats-price #summary-stat-median span");
-    medianPriceHTML.text(median_price);
+    medianPriceHTML.text(`$${formatComma(Math.round(median_price))}`);
 
     stdev_price = d3.deviation(prices);
     var stdevPriceHTML = d3.select("#summary-stats-price #summary-stat-stdev span");
-    stdevPriceHTML.text(stdev_price);
+    stdevPriceHTML.text(`$${formatComma(Math.round(stdev_price))}`);
 
     min_price = d3.min(prices);
     var minPriceHTML = d3.select("#summary-stats-price #summary-stat-min span");
-    minPriceHTML.text(min_price);
+    minPriceHTML.text(`$${formatComma(Math.round(min_price))}`);
 
     max_price = d3.max(prices); 
     var maxPriceHTML = d3.select("#summary-stats-price #summary-stat-max span");
-    maxPriceHTML.text(min_price);
+    maxPriceHTML.text(`$${formatComma(Math.round(max_price))}`);
+    // -------------------------------------------------------------------------------------------
     
+    // -------------------------------------------------------------------------------------------
     // 2biii.) Create pie chart of distribution of age of homes sold
+    // Calculate the age and send into its own array
+    var currYear = new Date().getFullYear();
+    var ageArray = response.map(age => currYear - age.year_built);
+    // Loop through the age array, create new array with age bucket
+    var ageArrayBuckets = ageArray.map(function (age) {
+                                          if (age >= 100) { return "100+"} 
+                                          else if (age < 100 && age >= 90) { return "90 - 100"}
+                                          else if (age < 90 && age >= 80) {return "80 - 90"}
+                                          else if (age < 80 && age >= 70) {return "70 - 80"}
+                                          else if (age < 70 && age >= 60) {return "60 - 70"}
+                                          else if (age < 60 && age >= 50) {return "50 - 60"}
+                                          else if (age < 50 && age >= 40) {return "40 - 50"}
+                                          else if (age < 40 && age >= 30) {return "30 - 40"}
+                                          else if (age < 30 && age >= 20) {return "20 - 30"}
+                                          else if (age < 20 && age >= 10) {return "10 - 20"}
+                                          else if (age < 10 && age >= 0) {return "0 - 10"}
+                                        }                                                
+                                        );
+    // Then do group by similar to what was done for top 5 zips/bar chart
+    var totalCountByAgeBucket = d3.nest()
+                                  .key(function (d) {return d} )
+                                  .rollup(function (v) {return v.length} )
+                                  .entries(ageArrayBuckets);
+
+    var data = [{
+        values: totalCountByAgeBucket.map(val => val.value),
+        labels: totalCountByAgeBucket.map(label => label.key),
+        type: 'pie'
+    }];
+
+    var layout = {
+      title: "Total Home Sales by Age",
+      height: 400,
+      width: 400
+    };
     
+    Plotly.newPlot('pie-chart', data, layout);
+    // -------------------------------------------------------------------------------------------
+    
+    // -------------------------------------------------------------------------------------------
     // 2biv.) Calculate total amounts exchanged
     total_dollars = d3.sum(prices);
     totalDollarsHTML = d3.select("#total-dollars-exchanged span")
-    totalDollarsHTML.text(total_dollars);
+    totalDollarsHTML.text(`$${(total_dollars / 1000000000).toFixed(2)}B`);
+    // -------------------------------------------------------------------------------------------
 
+    // -------------------------------------------------------------------------------------------
     //2bv.) Calculate bar chart showing interior/exterior condition
+    var totalCountByIntCondition = d3.nest()
+                                     .key(function (d) { return d.interior_condition} )
+                                     .rollup(function (v) {return v.length} )
+                                     .entries(response);
+    
+    var totalCountByExtCondition = d3.nest()
+                                     .key(function (d) {return d.exterior_condition} )
+                                     .rollup(function (v) {return v.length} )
+                                     .entries(response);
+    // Create plotly chart based on totalCountByIntCondition/totalCountByExtCondition defined above
+    var intConditionXTrace = totalCountByIntCondition.map(valx => valx.key )
+    var intConditionYTrace = totalCountByIntCondition.map(valy => valy.value)
 
+    var trace1 = {
+      x: intConditionXTrace,
+      y: intConditionYTrace,
+      name: "Interior Condition",
+      type: "bar"
+    }
+
+    var extConditionXTrace = totalCountByExtCondition.map(valx => valx.key )
+    var extConditionYTrace = totalCountByExtCondition.map(valy => valy.value)
+
+    var trace2 = {
+      x: extConditionXTrace,
+      y: extConditionYTrace,
+      name: "Exterior Condition",
+      type: "bar"
+    }
+
+    var data = [trace1, trace2];
+    var layout = {
+      title: "Number of Sales by Home Condition",
+      barmode: 'group',
+      legend: {"orientation": "h"},
+      width: 500,
+      height: 400
+    };
+    Plotly.newPlot('bar-chart', data, layout);
+    // -------------------------------------------------------------------------------------------
+
+    // -------------------------------------------------------------------------------------------
     //2bvi.) Calculate top 5 zip codes by # of homes sold
     // NOTE: use d3.nest, adapted from http://learnjsdata.com/group_data.html
     var totalCountByZip = d3.nest()
@@ -100,107 +194,26 @@ function handleClick() {
     topZip5Value.text(top5zip[4]["key"]);
     // Zip code counts
     var topZip1Count = d3.select("#top-zip-1 .column-2")
-    topZip1Count.text(top5zip[0]["value"]);
+    topZip1Count.text(formatComma(top5zip[0]["value"]));
     var topZip2Count = d3.select("#top-zip-2 .column-2")
-    topZip2Count.text(top5zip[1]["value"]);
+    topZip2Count.text(formatComma(top5zip[1]["value"]));
     var topZip3Count = d3.select("#top-zip-3 .column-2")
-    topZip3Count.text(top5zip[2]["value"]);
+    topZip3Count.text(formatComma(top5zip[2]["value"]));
     var topZip4Count = d3.select("#top-zip-4 .column-2")
-    topZip4Count.text(top5zip[3]["value"]);
+    topZip4Count.text(formatComma(top5zip[3]["value"]));
     var topZip5Count = d3.select("#top-zip-5 .column-2")
-    topZip5Count.text(top5zip[4]["value"]);
-
-    console.log(totalCountByZip);
-    console.log(top5zip);
-
+    topZip5Count.text(formatComma(top5zip[4]["value"]));
+    // -------------------------------------------------------------------------------------------
+    // Disable slickloader
+    SlickLoader.disable();
   });
 };
 
+// 3.) Add event listener for on change event of changing year prompt
+d3.select("#year").on("change", function() {
+  console.log("year prompt changed")
+  handleClick();
+});
+
 handleClick();
-
-//     if (err) throw err;
-
-//     // 3ci.) Prior to selecting any filters, comp data will not be shown
-//     // Update upon data being returned - take div with id 'comp-results' and change its class from "hide" to "unhide"
-//     compResultDiv = d3.select("#comp-results");
-//     compResultDiv.attr("class", "unhide");
-
-//     // 3ci.) Create sorted dataset based off of reponse from api/flask call
-//     sorted_data = response.sort(function (a, b) {
-//       // Turn your strings into dates, and then subtract them
-//       // to get a value that is either negative, positive, or zero.
-//       return new Date(b.sale_date) - new Date(a.sale_date);
-//     });
-
-//     // 3cii.) Grab the top 5 values from the sorted dataset
-//     var top5values = sorted_data.slice(0, 5);
-
-//     // 3ciii.) Calculate average sale price of top 5 houses returned - use calculateAverage function defined above
-//     var salePrices = top5values.map((price) => price.sale_price);
-//     var avgPrice = calculateAverage(salePrices);
-
-//     // 3civ.) Define formatting to be used in rendering values from dataset
-//     var formatComma = d3.format(",");
-//     var formatDate = d3.timeFormat("%b %d, %Y");
-
-//     // 3cv.) Retrieve attributes to be included in comp results
-//     // Use for loop through and retrieve attributes
-//     for (var i = 0; i < top5values.length; i++) {
-//         // Retrieve year attribute to be passed
-//     //   // Retrieve attributes to be injected into comp result html
-//     //   var compAddress = `${top5values[i]["location"]}, ${top5values[i]["zip_code"]}`;
-//     //   var compSaleDate = formatDate(Date.parse(top5values[i]["sale_date"]));
-//     //   var compSalePrice = `$${formatComma(top5values[i]["sale_price"])}`;
-//     //   var compTotalRooms = top5values[i]["number_of_rooms"];
-//     //   var compBedrooms = top5values[i]["number_of_bedrooms"];
-//     //   var compBathrooms = top5values[i]["number_of_bathrooms"];
-//     //   var compSquareFootage = `${formatComma(
-//     //     top5values[i]["total_liveable_area"]
-//     //   )}`;
-//     //   // For age, first get the current day's year
-//     //   var currYear = new Date().getFullYear();
-//     //   var compAge = currYear - top5values[i]["year_built"];
-//     //   // Inject html content based on variables defined above
-//     //   var currIDValue = `comp-result-${i + 1}`;
-//     //   // Comp address
-//     //   var addressContent = d3.select(`#${currIDValue} h3 span`);
-//     //   addressContent.text(compAddress);
-//     //   // Comp sale date
-//     //   var saleDate = d3.select(`#${currIDValue} .comp-result-sale-date span`);
-//     //   saleDate.text(compSaleDate);
-//     //   // Comp sale price
-//     //   var salePrice = d3.select(`#${currIDValue} .comp-result-sale-price span`);
-//     //   salePrice.text(compSalePrice);
-//     //   // Comp total rooms
-//     //   var totalRooms = d3.select(
-//     //     `#${currIDValue} .comp-result-total-rooms span`
-//     //   );
-//     //   totalRooms.text(compTotalRooms);
-//     //   // Comp total bedrooms
-//     //   var totalBedrooms = d3.select(
-//     //     `#${currIDValue} .comp-result-bedrooms span`
-//     //   );
-//     //   totalBedrooms.text(compBedrooms);
-//     //   // Comp total bathrooms
-//     //   var totalBathrooms = d3.select(
-//     //     `#${currIDValue} .comp-result-bathrooms span`
-//     //   );
-//     //   totalBathrooms.text(compBathrooms);
-//     //   // Comp square footage
-//     //   var squareFootage = d3.select(`#${currIDValue} .comp-result-sq-ft span`);
-//     //   squareFootage.text(compSquareFootage);
-//     //   // Comp age
-//     //   var age = d3.select(`#${currIDValue} .comp-result-age span`);
-//     //   age.text(compAge);
-//     // }
-//     // // Update html to display average price based on comp selected
-//     // var avgPriceContent = d3.select("#comp-avg-price h3 span");
-//     // avgPriceContent.text(`$${formatComma(avgPrice)}`);
-
-//     // console.log(avgPrice);
-//     // console.log(salePrices);
-//     // console.log(sorted_data);
-//     // console.log(top5values);
-//     // return top5values;
-//   });
 
