@@ -13,8 +13,38 @@ main {
     display: flex;
     text-align: center;
     flex-direction: column;
-    padding-top: 20px;
+    padding-top: 50px;
 }
+
+/*Added 7/23/21 JB: Add padding to "tile" elements and border colors*/
+.tile {
+    padding: 10px;
+}
+
+.tile-card {
+    height: 432px;
+}
+
+.card {
+    z-index: -2;
+}
+
+label {
+    font-weight: 700;
+}
+
+form {
+    padding-bottom: 20px;
+}
+
+/*------------------------------------------------------------------*/
+
+/*Added 7/23/21 JB: Add margin to */
+.dashboard-info {
+    margin-top: 20px;
+}
+
+/*------------------------------------------------------------------*/
 
 .preload * {
     transition: none !important;
@@ -44,7 +74,7 @@ main {
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 2;
+    z-index: 3;
     height: 100vh;
     width: 250px;
     background: #ffffff;

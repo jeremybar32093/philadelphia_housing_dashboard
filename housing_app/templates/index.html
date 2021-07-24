@@ -59,13 +59,14 @@
         <div class="nav_overlay"></div>
     </nav>
 
-    <main>
-        <h2>Dashboard</h2>
-        <p>Welcome to the Philadelphia Housing Dashboard application! This site aims to provide insights into the Philadelphia Housing Market and identify potential areas for investment!</p>
-    </main>
+    <div class="container">
 
-    <div class="flexbox  wrapper">
-        <div class="filter">
+        <main class="dashboard-info">
+            <h2>Dashboard</h2>
+            <p>Welcome to the Philadelphia Housing Dashboard application! This site aims to provide insights into the Philadelphia Housing Market and identify potential areas for investment!</p>
+        </main>
+       
+        <div class="content-flexbox one">
             <!-- Dropdown filters -->
             <form action="">
                 <label for="year">Select a Year to View a High Level Market Snapshot: </label>
@@ -78,7 +79,6 @@
             </form>
         </div>
 
-        <div class="content">
             <!-- Row 1: Cards with total # of homes sold, total $ exchanged -->
             <div class="row">
                 <!-- Tile 1: Total homes sold -->

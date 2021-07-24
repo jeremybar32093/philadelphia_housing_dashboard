@@ -4,7 +4,6 @@
 <head>
     <title>Line Chart</title>
 
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <meta charset="UTF-8" />
@@ -43,7 +42,7 @@
             <a href="comps" class="nav_link"> Comps Analysis </a>
             <a class="nav_link" href="scatter"> Scatter Plot </a>
             <a class="nav_link" href="line"> Line Chart </a>
-            <a class="nav_link" href="map"> Map </a>
+            <a class="nav_link" href="map"> Heat Map </a>
         </div>
         <div class="nav_overlay"></div>
     </nav>
@@ -152,13 +151,9 @@
 <!-- Script for d3 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.min.js"></script>
 
-<!-- Script for comp analysis -->
-<script src="{{ url_for('static', filename='js/comps.js') }}"></script>
-
 <!-- Script for layout js elements -->
 <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
 
 <script src="../static/js/dashboard.js"></script>
-
 
 </html>
