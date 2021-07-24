@@ -39,6 +39,10 @@ function calculateAverage(numArray) {
 
 // 3.) Event listener for clicking apply filter button
 d3.select("#submit").on("click", function () {
+
+  // Enable slickloader
+  SlickLoader.enable();
+
   // 3a.) Prevent default behavior of page refresh upon event trigger
   d3.event.preventDefault();
 
@@ -118,11 +122,14 @@ d3.select("#submit").on("click", function () {
     var avgPriceContent = d3.select("#comp-avg-price h3 span");
     avgPriceContent.text(`$${formatComma(avgPrice)}`);
 
+    // console.log(avgPrice);
+    // console.log(salePrices);
+    // console.log(sorted_data);
+    // console.log(top5values);
 
-    console.log(avgPrice);
-    console.log(salePrices);
-    console.log(sorted_data);
-    console.log(top5values);
+    // Disable slickloader
+    SlickLoader.disable();
+
     return top5values;
 
   });
