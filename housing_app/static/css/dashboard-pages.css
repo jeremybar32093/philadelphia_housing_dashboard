@@ -1,0 +1,23 @@
+main {
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    padding-top: 20px;
+}
+
+/*.flexbox {
+    display: grid;
+    grid-template-columns: auto;
+    grid-gap: 1ch;
+    padding-left: 20px;
+    padding-right: 20px;
+    height: 500px;
+    width: 500px;
+    margin: auto;
+}
+
+.one {
+    order: 2;
+    /*background-color: red;
+    height: 100%;
+}*/

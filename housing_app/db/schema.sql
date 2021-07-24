@@ -53,3 +53,22 @@ CREATE TABLE "philadelphia_home_sales" (
      )
 );
 
+CREATE TABLE "ref_basements" (
+    "rb_id" VARCHAR(10)   NOT NULL,
+    "rb_value" VARCHAR(255)   NULL,
+	"rb_value_desc" VARCHAR(255) NULL,
+
+    CONSTRAINT "pk_ref_basements" PRIMARY KEY (
+        "rb_id"
+     )
+);
+
+CREATE TABLE "ref_exterior_condition" (
+    "rec_id" VARCHAR(10)   NOT NULL,
+    "rec_value" VARCHAR(255)   NULL,
+	"rec_value_desc" VARCHAR(500) NULL,
+
+    CONSTRAINT "pk_ref_exterior_condition" PRIMARY KEY (
+        "rec_id"
+     )
+);

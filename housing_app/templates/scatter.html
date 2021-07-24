@@ -4,99 +4,114 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/js/scatter.css">
+    <!-- "Slick Loader" - loading gif - https://github.com/Zenoo/slick-loader -->
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/slick-loader@1.1.20/slick-loader.min.css">
+    <script src="https://unpkg.com/slick-loader@1.1.20/slick-loader.min.js"></script>	
     <title>Scatter Plot</title>
 </head>
 <body>
     <h1>Scatter Plot</h1>
-    <!-- Dropdown filter -->
-    <form action="">
-        <!-- Filter for Year -->
-        <label for="year">Year: </label>
-        <select name="year" id="year">
-            <option value="no_selection" selected value>All Years</option>
-          {% for item in year %}
-            <option value="{{ item[0] }}">{{ item[0] }}</option>
-          {% endfor %}
-        </select>
-        <br><br>
-        <!-- Filter for Zip Code -->
-        <label for="zip_codes">Zip Code: </label>
-        <select name="zip_codes" id="zip_codes">
-            <option value="no_selection" selected value>All ZIP Codes</option>
-          {% for item in zip_codes %}
-            <option value="{{ item[0] }}">{{ item[0] }}</option>
-          {% endfor %}
-        </select>
-        <br><br>
-        <!-- Filter for Category Code -->
-        <label for="category_code">Category Code: </label>
-        <select name="category_code" id="category_code">
-            <option value="no_selection" selected value>Category Code</option>
-          {% for item in category_code %}
-            <option value="{{ item[0] }}">{{ item[0] }}</option>
-          {% endfor %}
-        </select>
-        <br><br>
-        <!-- Filter for Building Code -->
-        <label for="building_code">Building Code: </label>
-        <select name="building_code" id="building_code">
-            <option value="no_selection" selected value>Building Code</option>
-          {% for item in building_code %}
-            <option value="{{ item[0] }}">{{ item[0] }}</option>
-          {% endfor %}
-        </select>
-        <br><br>
-        <!-- Filter for Basements -->
-        <label for="basements">Basements: </label>
-        <select name="basements" id="basements">
-            <option value="no_selection" selected value>Basements</option>
-          {% for item in basements %}
-            <option value="{{ item[0] }}">{{ item[0] }}</option>
-          {% endfor %}
-        </select>
-        <br><br>
-        <!-- Filter for Central Air -->
-        <label for="central_air">Central Air: </label>
-        <select name="central_air" id="central_air">
-            <option value="no_selection" selected value>Central Air</option>
-          {% for item in central_air %}
-            <option value="{{ item[0] }}">{{ item[0] }}</option>
-          {% endfor %}
-        </select>
-        <br><br>
-        <!-- Filter for Exterior Condition -->
-        <label for="exterior_condition">Exterior Condition: </label>
-        <select name="exterior_condition" id="exterior_condition">
-            <option value="no_selection" selected value>Exterior Condition</option>
-          {% for item in exterior_condition %}
-            <option value="{{ item[0] }}">{{ item[0] }}</option>
-          {% endfor %}
-        </select>
-        <br><br>
-        <!-- Filter for Garage Spaces -->
-        <label for="garage_spaces">Garage Spaces: </label>
-        <select name="garage_spaces" id="garage_spaces">
-            <option value="no_selection" selected value>Y/N</option>
-          {% for item in garage_spaces %}
-            <option value="{{ item[0] }}">{{ item[0] }}</option>
-          {% endfor %}
-        </select>
-        <br><br>
-        <!-- Filter for Fireplaces -->
-        <label for="fireplaces">Fireplaces: </label>
-        <select name="fireplaces" id="fireplaces">
-            <option value="no_selection" selected value>Y/N</option>
-          {% for item in fireplaces %}
-            <option value="{{ item[0] }}">{{ item[0] }}</option>
-          {% endfor %}
-        </select>
-        <br><br>
-        <!-- Below is placeholder for now -->
-        <input id="submit" type="submit" value="Apply Filters">
-    </form>
+    <div class="row">
+      <div class="col-xs-12 col-md-3">
+        <!-- Dropdown filter -->
+        <form action="">
+            <!-- Filter for Year -->
+            <label for="year">Year: </label>
+            <select name="year" id="year">
+                <option value="no_selection" selected value>All Years</option>
+              {% for item in year %}
+                <option value="{{ item[0] }}">{{ item[0] }}</option>
+              {% endfor %}
+            </select>
+            <br><br>
+            <!-- Filter for Zip Code -->
+            <label for="zip_codes">Zip Code: </label>
+            <select name="zip_codes" id="zip_codes">
+                <option value="no_selection" selected value>All ZIP Codes</option>
+              {% for item in zip_codes %}
+                <option value="{{ item[0] }}">{{ item[0] }}</option>
+              {% endfor %}
+            </select>
+            <br><br>
+            <!-- Filter for Category Code -->
+            <label for="category_code">Category Code: </label>
+            <select name="category_code" id="category_code">
+                <option value="no_selection" selected value>Category Code</option>
+              {% for item in category_code %}
+                <option value="{{ item[0] }}">{{ item[0] }}</option>
+              {% endfor %}
+            </select>
+            <br><br>
+            <!-- Filter for Building Code -->
+            <label for="building_code">Building Code: </label>
+            <select name="building_code" id="building_code">
+                <option value="no_selection" selected value>Building Code</option>
+              {% for item in building_code %}
+                <option value="{{ item[0] }}">{{ item[0] }}</option>
+              {% endfor %}
+            </select>
+            <br><br>
+            <!-- Filter for Basements -->
+            <label for="basements">Basements: </label>
+            <select name="basements" id="basements">
+                <option value="no_selection" selected value>Basements</option>
+              {% for item in basements %}
+                <option value="{{ item[0] }}">{{ item[0] }}</option>
+              {% endfor %}
+            </select>
+            <br><br>
+            <!-- Filter for Central Air -->
+            <label for="central_air">Central Air: </label>
+            <select name="central_air" id="central_air">
+                <option value="no_selection" selected value>Central Air</option>
+              {% for item in central_air %}
+                <option value="{{ item[0] }}">{{ item[0] }}</option>
+              {% endfor %}
+            </select>
+            <br><br>
+            <!-- Filter for Exterior Condition -->
+            <label for="exterior_condition">Exterior Condition: </label>
+            <select name="exterior_condition" id="exterior_condition">
+                <option value="no_selection" selected value>Exterior Condition</option>
+              {% for item in exterior_condition %}
+                <option value="{{ item[0] }}">{{ item[0] }}</option>
+              {% endfor %}
+            </select>
+            <br><br>
+            <!-- Filter for Garage Spaces -->
+            <label for="garage_spaces">Garage Spaces: </label>
+            <select name="garage_spaces" id="garage_spaces">
+                <option value="no_selection" selected value>Y/N</option>
+              {% for item in garage_spaces %}
+                <option value="{{ item[0] }}">{{ item[0] }}</option>
+              {% endfor %}
+            </select>
+            <br><br>
+            <!-- Filter for Fireplaces -->
+            <label for="fireplaces">Fireplaces: </label>
+            <select name="fireplaces" id="fireplaces">
+                <option value="no_selection" selected value>Y/N</option>
+              {% for item in fireplaces %}
+                <option value="{{ item[0] }}">{{ item[0] }}</option>
+              {% endfor %}
+            </select>
+            <br><br>
+            <!-- Below is placeholder for now -->
+            <input id="submit" type="submit" value="Apply Filters">
+        </form>
+      </div>
+      <div class="col-xs-12  col-md-9 scatter-area">
+        <div id="scatter">
+          <!-- We append our chart here. -->
+        </div>
+      </div>
+    </div>
 </body>
 <!-- Script for d3 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.min.js"></script>
+<script src="https://d3js.org/d3.v5.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.9.1/d3-tip.js"></script>
 <!-- Script for scatter plot -->
 <script src="{{ url_for('static', filename='js/scatter.js') }}"></script>
 </html>

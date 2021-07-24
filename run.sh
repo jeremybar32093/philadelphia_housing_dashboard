@@ -1,0 +1,1 @@
+FLASK_APP=housing_app/app.py flask run
