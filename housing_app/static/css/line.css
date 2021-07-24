@@ -1,0 +1,24 @@
+@media screen and (min-width: 650px) {
+    .flexbox {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .wrapper {
+        margin: auto;
+        max-width: 75rem;
+    }
+
+    .filter {
+        width: calc(25% - 10px);
+        margin: 25px 50px 0px 75px;
+        /*background-color: aqua;*/
+    }
+
+    .content {
+        width: calc(75% - 10px);
+        margin: 25px 50px 0px 75px;
+        /* for scroll bar */
+        height: 600px;
+    }
+}
