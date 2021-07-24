@@ -24,7 +24,7 @@ app = Flask(__name__)
 # Database Setup
 #################################################
 # Set up database engine - NOTE: will need to update connection string once postgreSQL in the cloud is running
-engine = create_engine("postgresql://postgres:postgres@localhost:5432/housing_db")
+engine = create_engine("postgresql://postgres:postgres@bootcamp.clwg1d6bpji9.us-east-2.rds.amazonaws.com:5432/housing_db", pool_timeout=150)
 
 # reflect an existing database into a new model
 Base = automap_base()
@@ -81,7 +81,8 @@ def map():
 
     # Close session
     session.close()
-
+    
+    
     # Render index.html template, pass in context variables for possible filtering values
     return render_template("map.html", year = year, zip_codes = zip_codes, category_code = category_code, building_code = building_code, basements = basements, central_air = central_air, exterior_condition = exterior_condition, garage_spaces = garage_spaces, fireplaces = fireplaces)
 
@@ -252,7 +253,7 @@ def data():
         AND {ext_query} 
         AND {garage_query} 
         AND {fireplace_query}"""
-
+ 
         print(sql_query)
         results = session.execute(sql_query).all()
 
