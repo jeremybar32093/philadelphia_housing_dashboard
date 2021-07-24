@@ -10,15 +10,16 @@
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
+    <link rel="stylesheet" href="../static/css/index.css">
+
     <link rel="stylesheet" href="../static/css/dashboard.css">
 
     <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <!-- "Slick Loader" - loading gif - https://github.com/Zenoo/slick-loader -->
     <link rel="stylesheet" type="text/css" href="https://unpkg.com/slick-loader@1.1.20/slick-loader.min.css">
-    <script src="https://unpkg.com/slick-loader@1.1.20/slick-loader.min.js"></script>	
+    <script src="https://unpkg.com/slick-loader@1.1.20/slick-loader.min.js"></script>
 
 
     <!--Fonts-->
@@ -58,22 +59,13 @@
         <div class="nav_overlay"></div>
     </nav>
 
-    <!-- <main>
+    <main>
         <h2>Dashboard</h2>
         <p>Welcome to the Philadelphia Housing Dashboard application! This site aims to provide insights into the Philadelphia Housing Market and identify potential areas for investment!</p>
-    </main> -->
+    </main>
 
-    <!-- <div class="flexbox"> -->
-    <div class="container">
-
-        <main class="dashboard-info">
-            <h2>Dashboard</h2>
-            <p>Welcome to the Philadelphia Housing Dashboard application! This site aims to provide insights into the
-                Philadelphia Housing Market and identify potential areas for investment!</p>
-        </main>
-
-        <div class="content-flexbox one">
-
+    <div class="flexbox  wrapper">
+        <div class="filter">
             <!-- Dropdown filters -->
             <form action="">
                 <label for="year">Select a Year to View a High Level Market Snapshot: </label>
@@ -84,117 +76,116 @@
                     {% endfor %}
                 </select>
             </form>
-
-        </div>
-        <!-- Row 1: Cards with total # of homes sold, total $ exchanged -->
-        <div class="row">
-            <!-- Tile 1: Total homes sold -->
-            <div class="col-md-6 tile">
-                <div class="card text-center border-5" style="border-color: #3182bd;">
-                    <div class="card-body">
-                        <div class="content-flexbox two" id="total-home-count">
-                            <h3>Total Homes Sold: <span></span></h3>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Tile 2: Total $ exchanged -->
-            <div class="col-md-6 tile">
-                <div class="card text-center border-5" style="border-color: #3182bd;">
-                    <div class="card-body">
-                        <div class="content-flexbox five" id="total-dollars-exchanged">
-                            <h3>Total $ Exchanged: <span></span></h3>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Row 2: Summary statistics, pie chart with # of homes sold -->
-        <div class="row">
-            <!-- Tile 3: Summary statistics -->
-            <div class="col-md-6 tile">
-                <div class="card tile-card border-5" style="border-color: #3182bd;">
-                    <div class="card-body">
-                        <div class="content-flexbox three" id="summary-stats-price">
-                            <h3>Summary Statistics</h3>
-                            <br>
-                            <h5 id="summary-stat-mean">Mean: <span></span></h5>
-                            <h5 id="summary-stat-median">Median: <span></span></h5>
-                            <h5 id="summary-stat-stdev">Standard Deviation: <span></span></h5>
-                            <h5 id="summary-stat-min">Minimum: <span></span></h5>
-                            <h5 id="summary-stat-max">Maximum: <span></span></h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Tile 4: pie chart -->
-            <div class="col-md-6 tile">
-                <div class="card tile-card border-5" style="border-color: #3182bd;">
-                    <div class="card-body">
-                        <div class="content-flexbox four" id="pie-chart">
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Row 3: Barchart, top 5 zip code table -->
-        <div class="row">
-            <!-- Tile 5: bar chart -->
-            <div class="col-md-6 tile">
-                <div class="card tile-card border-5" style="border-color: #3182bd;">
-                    <div class="card-body">
-                        <div class="content-flexbox six" id="bar-chart">
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Tile 6: top 5 zip codes -->
-            <div class="col-md-6 tile">
-                <div class="card tile-card border-5" style="border-color: #3182bd;">
-                    <div class="card-body">
-                        <div class="content-flexbox seven" id="top5zip">
-                            <h3>Top 5 Zip Codes</h3>
-                            <table class="table table-striped table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>Zip Code</th>
-                                        <th>Number of Sales</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr id="top-zip-1">
-                                        <td class="column-1"></td>
-                                        <td class="column-2"></td>
-                                    </tr>
-                                    <tr id="top-zip-2">
-                                        <td class="column-1"></td>
-                                        <td class="column-2"></td>
-                                    </tr>
-                                    <tr id="top-zip-3">
-                                        <td class="column-1"></td>
-                                        <td class="column-2"></td>
-                                    </tr>
-                                    <tr id="top-zip-4">
-                                        <td class="column-1"></td>
-                                        <td class="column-2"></td>
-                                    </tr>
-                                    <tr id="top-zip-5">
-                                        <td class="column-1"></td>
-                                        <td class="column-2"></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
 
-    </div>
+        <div class="content">
+            <!-- Row 1: Cards with total # of homes sold, total $ exchanged -->
+            <div class="row">
+                <!-- Tile 1: Total homes sold -->
+                <div class="col-md-6 tile">
+                    <div class="card text-center border-5" style="border-color: #3182bd;">
+                        <div class="card-body">
+                            <div class="content-flexbox two" id="total-home-count">
+                                <h3>Total Homes Sold: <span></span></h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Tile 2: Total $ exchanged -->
+                <div class="col-md-6 tile">
+                    <div class="card text-center border-5" style="border-color: #3182bd;">
+                        <div class="card-body">
+                            <div class="content-flexbox five" id="total-dollars-exchanged">
+                                <h3>Total $ Exchanged: <span></span></h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Row 2: Summary statistics, pie chart with # of homes sold -->
+            <div class="row">
+                <!-- Tile 3: Summary statistics -->
+                <div class="col-md-6 tile">
+                    <div class="card tile-card border-5" style="border-color: #3182bd;">
+                        <div class="card-body">
+                            <div class="content-flexbox three" id="summary-stats-price">
+                                <h3>Summary Statistics</h3>
+                                <br>
+                                <h5 id="summary-stat-mean">Mean: <span></span></h5>
+                                <h5 id="summary-stat-median">Median: <span></span></h5>
+                                <h5 id="summary-stat-stdev">Standard Deviation: <span></span></h5>
+                                <h5 id="summary-stat-min">Minimum: <span></span></h5>
+                                <h5 id="summary-stat-max">Maximum: <span></span></h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Tile 4: pie chart -->
+                <div class="col-md-6 tile">
+                    <div class="card tile-card border-5" style="border-color: #3182bd;">
+                        <div class="card-body">
+                            <div class="content-flexbox four" id="pie-chart">
 
-    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Row 3: Barchart, top 5 zip code table -->
+            <div class="row">
+                <!-- Tile 5: bar chart -->
+                <div class="col-md-6 tile">
+                    <div class="card tile-card border-5" style="border-color: #3182bd;">
+                        <div class="card-body">
+                            <div class="content-flexbox six" id="bar-chart">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Tile 6: top 5 zip codes -->
+                <div class="col-md-6 tile">
+                    <div class="card tile-card border-5" style="border-color: #3182bd;">
+                        <div class="card-body">
+                            <div class="content-flexbox seven" id="top5zip">
+                                <h3>Top 5 Zip Codes</h3>
+                                <table class="table table-striped table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Zip Code</th>
+                                            <th>Number of Sales</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr id="top-zip-1">
+                                            <td class="column-1"></td>
+                                            <td class="column-2"></td>
+                                        </tr>
+                                        <tr id="top-zip-2">
+                                            <td class="column-1"></td>
+                                            <td class="column-2"></td>
+                                        </tr>
+                                        <tr id="top-zip-3">
+                                            <td class="column-1"></td>
+                                            <td class="column-2"></td>
+                                        </tr>
+                                        <tr id="top-zip-4">
+                                            <td class="column-1"></td>
+                                            <td class="column-2"></td>
+                                        </tr>
+                                        <tr id="top-zip-5">
+                                            <td class="column-1"></td>
+                                            <td class="column-2"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
 
@@ -204,9 +195,7 @@
 <!-- Scripts -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.min.js"></script>
 <script src="https://cdn.plot.ly/plotly-2.2.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <script src="../static/js/dashboard.js"></script>
 <script src="../static/js/dashboard_calcs.js"></script>
 
