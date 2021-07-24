@@ -24,11 +24,10 @@ app = Flask(__name__)
 # Database Setup
 #################################################
 # Set up database engine - NOTE: will need to update connection string once postgreSQL in the cloud is running
-<<<<<<< HEAD
+
 engine = create_engine("postgresql://postgres:postgres@bootcamp.clwg1d6bpji9.us-east-2.rds.amazonaws.com:5432/housing_db", pool_timeout=150)
-=======
+
 engine = create_engine("postgresql://postgres:postgres@bootcamp.clwg1d6bpji9.us-east-2.rds.amazonaws.com:5432/housing_db")
->>>>>>> 787838eb9589691c09fa86fb0ed40a9054730bf9
 
 # reflect an existing database into a new model
 Base = automap_base()
