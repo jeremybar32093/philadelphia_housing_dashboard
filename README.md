@@ -38,7 +38,11 @@ The following files were required for deploying the flask application to Heroku:
 
 ## Team Members
 Anjanette Velazco
+
 Anthony Carannante
+
 DeAngelo Williams
+
 Dominique DeMoe
+
 Jeremy Bar
