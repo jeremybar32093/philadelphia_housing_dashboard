@@ -1,5 +1,13 @@
 # Philadelphia Housing Dashboard
 
+## Team Members
+- Anjanette Velazco
+- Anthony Carannante
+- DeAngelo Williams
+- Dominique DeMoe
+- Jeremy Bar
+
+## Description
 This repository contains a python Flask application that houses a website to perform a high level analysis and exploration of the Philadelphia housing market over the past 5 years (2016-2020). 
 
 Within the housing_app directory, there are the files necessary for the application and webpage design:
@@ -35,14 +43,3 @@ The following files were required for deploying the flask application to Heroku:
 ## Comps Analysis
 
 <img width="362" alt="Screen Shot 2021-07-25 at 12 58 23 PM" src="https://user-images.githubusercontent.com/79670978/126907147-8ffcfa33-e2bc-4cb7-9960-dea5180437d5.png">
-
-## Team Members
-Anjanette Velazco
-
-Anthony Carannante
-
-DeAngelo Williams
-
-Dominique DeMoe
-
-Jeremy Bar
