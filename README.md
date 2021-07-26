@@ -56,3 +56,7 @@ The line chart shows month-by-month how many homes were sold within a specific y
 The comps analysis gives users the top 5 home sales within a specific area, filterable by zip code and other amenities. It will display attributes of the house so a user can get an idea of what a home would sell for in that area. This is the last piece of the user experience once they have decided where they are interested in buying a home in the city. This will give them an idea of what they might pay for such a home.
 
 <img width="362" alt="Screen Shot 2021-07-25 at 12 58 23 PM" src="https://user-images.githubusercontent.com/79670978/126907147-8ffcfa33-e2bc-4cb7-9960-dea5180437d5.png">
+
+## Future Enhancements
+
+In the future, our idea is to create a predictive model via machine learning to determine future housing prices. 
