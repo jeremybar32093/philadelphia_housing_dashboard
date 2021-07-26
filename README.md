@@ -27,7 +27,7 @@ The following files were required for deploying the flask application to Heroku:
 - run.sh
 - Procfile
 
-A SQL Database was set up to store the data in the AWS Cloud and can be connected to through pgAdmin.
+A SQL Database was set up to store the data in the AWS Cloud and can be connected to via pgAdmin. 
 
 ## Dashboard
 
