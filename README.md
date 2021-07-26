@@ -59,4 +59,4 @@ The comps analysis gives users the top 5 home sales within a specific area, filt
 
 ## Future Enhancements
 
-In the future, our idea is to create a predictive model via machine learning to determine future housing prices. 
+In the future, we will look into designing a predictive model via machine learning to determine future housing prices. 
