@@ -27,6 +27,8 @@ The following files were required for deploying the flask application to Heroku:
 - run.sh
 - Procfile
 
+A SQL Database was set up to store the data in the AWS Cloud and can be connected to through pgAdmin.
+
 ## Dashboard
 
 The dashboard allows the user to get an overall idea of the housing market in recent years. It displays the number of homes sold, the amount of money exchanged for home sales, and summary statistics of the year such as mean, median, etc. For home sold in the respective year, the user can view the age and interior/exterior conditions of all home sales as well as the top 5 areas of Philadelphia with the most activity, sorted by zip code.
