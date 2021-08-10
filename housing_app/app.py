@@ -35,6 +35,9 @@ Base.prepare(engine, reflect=True)
 # Create class for home sales table
 PhillyHome = Base.classes.philadelphia_home_sales
 
+# Create class for ref basements table
+PhillyHome_basements = Base.classes.ref_basements
+
 #################################################
 # Flask routes
 #################################################
@@ -73,7 +76,7 @@ def map():
     zip_codes = session.query(PhillyHome.zip_code.distinct()).order_by(asc(PhillyHome.zip_code))
     category_code = session.query(PhillyHome.category_code_description.distinct()).order_by(asc(PhillyHome.category_code_description))
     building_code = session.query(PhillyHome.building_code_description.distinct()).order_by(asc(PhillyHome.building_code_description))
-    basements = session.query(PhillyHome.basements.distinct()).order_by(asc(PhillyHome.basements))
+    basements = session.query(PhillyHome_basements.rb_id, PhillyHome_basements.rb_value).all()
     central_air = session.query(PhillyHome.central_air.distinct()).order_by(asc(PhillyHome.central_air))
     exterior_condition = session.query(PhillyHome.exterior_condition.distinct()).order_by(asc(PhillyHome.exterior_condition))
     garage_spaces = ['Yes','No']
@@ -102,7 +105,7 @@ def line():
     zip_codes = session.query(PhillyHome.zip_code.distinct()).order_by(asc(PhillyHome.zip_code))
     category_code = session.query(PhillyHome.category_code_description.distinct()).order_by(asc(PhillyHome.category_code_description))
     building_code = session.query(PhillyHome.building_code_description.distinct()).order_by(asc(PhillyHome.building_code_description))
-    basements = session.query(PhillyHome.basements.distinct()).order_by(asc(PhillyHome.basements))
+    basements = session.query(PhillyHome_basements.rb_id, PhillyHome_basements.rb_value).all()
     central_air = session.query(PhillyHome.central_air.distinct()).order_by(asc(PhillyHome.central_air))
     exterior_condition = session.query(PhillyHome.exterior_condition.distinct()).order_by(asc(PhillyHome.exterior_condition))
     garage_spaces = ['Yes','No']
@@ -130,7 +133,7 @@ def comps():
     zip_codes = session.query(PhillyHome.zip_code.distinct()).order_by(asc(PhillyHome.zip_code))
     category_code = session.query(PhillyHome.category_code_description.distinct()).order_by(asc(PhillyHome.category_code_description))
     building_code = session.query(PhillyHome.building_code_description.distinct()).order_by(asc(PhillyHome.building_code_description))
-    basements = session.query(PhillyHome.basements.distinct()).order_by(asc(PhillyHome.basements))
+    basements = session.query(PhillyHome_basements.rb_id, PhillyHome_basements.rb_value).all()
     central_air = session.query(PhillyHome.central_air.distinct()).order_by(asc(PhillyHome.central_air))
     exterior_condition = session.query(PhillyHome.exterior_condition.distinct()).order_by(asc(PhillyHome.exterior_condition))
     garage_spaces = ['Yes','No']
@@ -158,7 +161,7 @@ def scatter():
     zip_codes = session.query(PhillyHome.zip_code.distinct()).order_by(asc(PhillyHome.zip_code))
     category_code = session.query(PhillyHome.category_code_description.distinct()).order_by(asc(PhillyHome.category_code_description))
     building_code = session.query(PhillyHome.building_code_description.distinct()).order_by(asc(PhillyHome.building_code_description))
-    basements = session.query(PhillyHome.basements.distinct()).order_by(asc(PhillyHome.basements))
+    basements = session.query(PhillyHome_basements.rb_id, PhillyHome_basements.rb_value).all()
     central_air = session.query(PhillyHome.central_air.distinct()).order_by(asc(PhillyHome.central_air))
     exterior_condition = session.query(PhillyHome.exterior_condition.distinct()).order_by(asc(PhillyHome.exterior_condition))
     garage_spaces = ['Yes','No']
@@ -211,7 +214,7 @@ def data():
         if basement_selected.strip() == 'no_selection':
             basement_query = '1=1'
         else:
-            basement_query = f"basements = '{bcode_selected.strip()}'"
+            basement_query = f"basements = '{basement_selected.strip()}'"
 
         central_air_selected = request.args.get('central_air')
         if central_air_selected.strip() == 'no_selection':

@@ -99,11 +99,11 @@
                 <br /><br />
 
                 <!-- Filter for Basements -->
-                <label for="basements">Basement type: </label>
+                <label for="basements">Basement Type: </label>
                 <select name="basements" id="basements">
                     <option value="no_selection" selected value>All Basement Types</option>
                     {% for item in basements %}
-                    <option value="{{ item[0] }}">{{ item[0] }}</option>
+                    <option value="{{ item[0] }}">{{ item[1] }}</option>
                     {% endfor %}
                 </select>
                 <br /><br />
