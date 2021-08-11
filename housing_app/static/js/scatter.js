@@ -115,24 +115,27 @@ function renderCirclesYAxis(circlesGroup, newYScale, chosenYAxis) {
 //      Read in both chosen X and Y axes
 function updateToolTip(chosenXAxis, chosenYAxis, circlesGroup) {
 
-  // 12a.) Create tooltip
+  // 12a.) Define comma separator for formatting sale price/x-axis variables
+  var formatComma = d3.format(",");
+
+  // 12b.) Create tooltip
   var toolTip = d3
     .tip()
     .attr("class", "d3-tip")
     .html(function (d) {
 
       var locationString = `Location: ${d["location"]}<br>`;
-      var yAxisString = `Sale Price: $${d[chosenYAxis]}<br>`;
-      var xAxisString = `${chosenXAxis}: ${d[chosenXAxis]}`;
+      var yAxisString = `Sale Price: $${formatComma(d[chosenYAxis])}<br>`;
+      var xAxisString = `${chosenXAxis}: ${formatComma(d[chosenXAxis])}`;
       var tooltip_html_string = `${locationString} ${yAxisString} ${xAxisString}`;
       return tooltip_html_string;
 
     });
 
-  // 12b.) Attach tooltip to circlesGroup
+  // 12c.) Attach tooltip to circlesGroup
   circlesGroup.call(toolTip);
 
-  // 12c.) Event listeners for hovering over datapoint
+  // 12d.) Event listeners for hovering over datapoint
   // Show relevant data when user hovers over datapoint
   circlesGroup
     .on("mouseover", function (data) {
