@@ -38,6 +38,9 @@ PhillyHome = Base.classes.philadelphia_home_sales
 # Create class for ref basements table
 PhillyHome_basements = Base.classes.ref_basements
 
+# Create class for ref exterior condition table
+PhillyHome_ext_condition = Base.classes.ref_exterior_condition
+
 #################################################
 # Flask routes
 #################################################
@@ -78,7 +81,8 @@ def map():
     building_code = session.query(PhillyHome.building_code_description.distinct()).order_by(asc(PhillyHome.building_code_description))
     basements = session.query(PhillyHome_basements.rb_id, PhillyHome_basements.rb_value).all()
     central_air = session.query(PhillyHome.central_air.distinct()).order_by(asc(PhillyHome.central_air))
-    exterior_condition = session.query(PhillyHome.exterior_condition.distinct()).order_by(asc(PhillyHome.exterior_condition))
+    # exterior_condition = session.query(PhillyHome.exterior_condition.distinct()).order_by(asc(PhillyHome.exterior_condition))
+    exterior_condition = session.query(PhillyHome_ext_condition.rec_id, PhillyHome_ext_condition.rec_value).all()
     garage_spaces = ['Yes','No']
     fireplaces = ['Yes','No']
 
@@ -107,7 +111,8 @@ def line():
     building_code = session.query(PhillyHome.building_code_description.distinct()).order_by(asc(PhillyHome.building_code_description))
     basements = session.query(PhillyHome_basements.rb_id, PhillyHome_basements.rb_value).all()
     central_air = session.query(PhillyHome.central_air.distinct()).order_by(asc(PhillyHome.central_air))
-    exterior_condition = session.query(PhillyHome.exterior_condition.distinct()).order_by(asc(PhillyHome.exterior_condition))
+    # exterior_condition = session.query(PhillyHome.exterior_condition.distinct()).order_by(asc(PhillyHome.exterior_condition))
+    exterior_condition = session.query(PhillyHome_ext_condition.rec_id, PhillyHome_ext_condition.rec_value).all()
     garage_spaces = ['Yes','No']
     fireplaces = ['Yes','No']
 
@@ -135,7 +140,8 @@ def comps():
     building_code = session.query(PhillyHome.building_code_description.distinct()).order_by(asc(PhillyHome.building_code_description))
     basements = session.query(PhillyHome_basements.rb_id, PhillyHome_basements.rb_value).all()
     central_air = session.query(PhillyHome.central_air.distinct()).order_by(asc(PhillyHome.central_air))
-    exterior_condition = session.query(PhillyHome.exterior_condition.distinct()).order_by(asc(PhillyHome.exterior_condition))
+    # exterior_condition = session.query(PhillyHome.exterior_condition.distinct()).order_by(asc(PhillyHome.exterior_condition))
+    exterior_condition = session.query(PhillyHome_ext_condition.rec_id, PhillyHome_ext_condition.rec_value).all()
     garage_spaces = ['Yes','No']
     fireplaces = ['Yes','No']
 
@@ -163,7 +169,8 @@ def scatter():
     building_code = session.query(PhillyHome.building_code_description.distinct()).order_by(asc(PhillyHome.building_code_description))
     basements = session.query(PhillyHome_basements.rb_id, PhillyHome_basements.rb_value).all()
     central_air = session.query(PhillyHome.central_air.distinct()).order_by(asc(PhillyHome.central_air))
-    exterior_condition = session.query(PhillyHome.exterior_condition.distinct()).order_by(asc(PhillyHome.exterior_condition))
+    # exterior_condition = session.query(PhillyHome.exterior_condition.distinct()).order_by(asc(PhillyHome.exterior_condition))
+    exterior_condition = session.query(PhillyHome_ext_condition.rec_id, PhillyHome_ext_condition.rec_value).all()
     garage_spaces = ['Yes','No']
     fireplaces = ['Yes','No']
 

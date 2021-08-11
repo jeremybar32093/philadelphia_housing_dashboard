@@ -71,7 +71,7 @@
                 <select name="year" id="year">
                     <option value="no_selection" disabled selected value>Select a Year</option>
                     {% for item in year %}
-                    <option value="{{ item }}">{{ item[0] }}</option>
+                    <option value="{{ item[0] }}">{{ item[0] }}</option>
                     {% endfor %}
                 </select>
                 <br><br>
@@ -125,7 +125,7 @@
                 <select name="exterior_condition" id="exterior_condition">
                     <option value="no_selection" disabled selected value>Exterior Condition</option>
                     {% for item in exterior_condition %}
-                    <option value="{{ item[0] }}">{{ item[0] }}</option>
+                    <option value="{{ item[0] }}">{{ item[1] }}</option>
                     {% endfor %}
                 </select>
                 <br><br>
