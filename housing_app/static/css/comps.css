@@ -5,3 +5,7 @@
 .unhide {
     display:block;
 }
+
+.selectize-input.full {
+    height: 20px;
+}
