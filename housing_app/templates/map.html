@@ -80,7 +80,7 @@
                 <!-- Filter for Year -->
                 <label for="year">Year: </label>
                 <select name="year" id="year">
-                    <option value="no_selection" disabled selected value>Select a Year</option>
+                    <option value="no_selection" selected value>All Years</option>
                     {% for item in year %}
                     <option value="{{ item[0] }}">{{ item[0] }}</option>
                     {% endfor %}
@@ -89,7 +89,7 @@
                 <!-- Filter for Zip Code -->
                 <label for="zip_codes">Zip Code: </label>
                 <select name="zip_codes" id="zip_codes">
-                    <option value="no_selection" disabled selected value>ZIP</option>
+                    <option value="no_selection" selected value>All ZIP Codes</option>
                     {% for item in zip_codes %}
                     <option value="{{ item[0] }}">{{ item[0] }}</option>
                     {% endfor %}
@@ -98,7 +98,7 @@
                 <!-- Filter for Category Code -->
                 <label for="category_code">Category Code: </label>
                 <select name="category_code" id="category_code">
-                    <option value="no_selection" disabled selected value>Category Code</option>
+                    <option value="no_selection" selected value>Category Code</option>
                     {% for item in category_code %}
                     <option value="{{ item[0] }}">{{ item[0] }}</option>
                     {% endfor %}
@@ -107,7 +107,7 @@
                 <!-- Filter for Building Code -->
                 <label for="building_code">Building Code: </label>
                 <select name="building_code" id="building_code">
-                    <option value="no_selection" disabled selected value>Building Code</option>
+                    <option value="no_selection" selected value>Building Code</option>
                     {% for item in building_code %}
                     <option value="{{ item[0] }}">{{ item[0] }}</option>
                     {% endfor %}
@@ -116,7 +116,7 @@
                 <!-- Filter for Basements -->
                 <label for="basements">Basement Type: </label>
                 <select name="basements" id="basements">
-                    <option value="no_selection" disabled selected value>All Basement Types</option>
+                    <option value="no_selection" selected value>All Basement Types</option>
                     {% for item in basements %}
                     <option value="{{ item[0] }}">{{ item[1] }}</option>
                     {% endfor %}
@@ -125,7 +125,7 @@
                 <!-- Filter for Central Air -->
                 <label for="central_air">Central Air: </label>
                 <select name="central_air" id="central_air">
-                    <option value="no_selection" disabled selected value>Central Air</option>
+                    <option value="no_selection" selected value>Central Air</option>
                     {% for item in central_air %}
                     <option value="{{ item[0] }}">{{ item[0] }}</option>
                     {% endfor %}
@@ -134,7 +134,7 @@
                 <!-- Filter for Exterior Condition -->
                 <label for="exterior_condition">Exterior Condition: </label>
                 <select name="exterior_condition" id="exterior_condition">
-                    <option value="no_selection" disabled selected value>Exterior Condition</option>
+                    <option value="no_selection" selected value>Exterior Condition</option>
                     {% for item in exterior_condition %}
                     <option value="{{ item[0] }}">{{ item[1] }}</option>
                     {% endfor %}
@@ -143,7 +143,7 @@
                 <!-- Filter for Garage Spaces -->
                 <label for="garage_spaces">Garage Spaces: </label>
                 <select name="garage_spaces" id="garage_spaces">
-                    <option value="no_selection" disabled selected value>Y/N</option>
+                    <option value="no_selection" selected value>Y/N</option>
                     {% for item in garage_spaces %}
                     <option value="{{ item[0] }}">{{ item[0] }}</option>
                     {% endfor %}
@@ -152,7 +152,7 @@
                 <!-- Filter for Fireplaces -->
                 <label for="fireplaces">Fireplaces: </label>
                 <select name="fireplaces" id="fireplaces">
-                    <option value="no_selection" disabled selected value>Y/N</option>
+                    <option value="no_selection" selected value>Y/N</option>
                     {% for item in fireplaces %}
                     <option value="{{ item[0] }}">{{ item[0] }}</option>
                     {% endfor %}
