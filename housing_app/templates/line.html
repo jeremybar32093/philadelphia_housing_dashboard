@@ -23,6 +23,17 @@
     <link rel="stylesheet" type="text/css" href="https://unpkg.com/slick-loader@1.1.20/slick-loader.min.css">
     <script src="https://unpkg.com/slick-loader@1.1.20/slick-loader.min.js"></script>
 
+    <!-- Jquery/selectize js and css - for having "smartsearch" in filter boxes -->
+    <!-- See second answer from https://stackoverflow.com/questions/18796221/creating-a-select-box-with-a-search-option/57809086#57809086 -->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css" integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" />
+
+    <script>$(document).ready(function () {
+        $('select').selectize({});
+    });</script>
+
     <!--Fonts-->
     <link rel="stylesheet" href="https://use.typekit.net/tmf5pjw.css">
 
