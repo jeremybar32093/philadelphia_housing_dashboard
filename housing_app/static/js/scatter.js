@@ -124,9 +124,27 @@ function updateToolTip(chosenXAxis, chosenYAxis, circlesGroup) {
     .attr("class", "d3-tip")
     .html(function (d) {
 
+      // Declare dict to show "friendly name" in scatter plot tooltip
+      var xAxisDict = {
+        "total_liveable_area":"Square Feet",
+        "depth":"Depth",
+        "exempt_building":"Exempt Building",
+        "exempt_land":"Exempt Land",
+        "fireplaces":"Fireplaces",
+        "frontage":"Frontage",
+        "garage_spaces":"Garage Spaces",
+        "market_value":"Market Value",
+        "number_of_bathrooms":"Number of Bathrooms",
+        "number_of_bedrooms":"Number of Bedrooms",
+        "number_of_rooms":"Number of Rooms",
+        "number_stories":"Number of Stories",
+        "taxable_building":"Taxable Building",
+        "taxable_land":"Taxable Land"
+      }
+
       var locationString = `Location: ${d["location"]}<br>`;
       var yAxisString = `Sale Price: $${formatComma(d[chosenYAxis])}<br>`;
-      var xAxisString = `${chosenXAxis}: ${formatComma(d[chosenXAxis])}`;
+      var xAxisString = `${xAxisDict[chosenXAxis]}: ${formatComma(d[chosenXAxis])}`;
       var tooltip_html_string = `${locationString} ${yAxisString} ${xAxisString}`;
       return tooltip_html_string;
 
