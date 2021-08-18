@@ -180,6 +180,10 @@ def scatter():
     # Render index.html template, pass in context variables for possible filtering values
     return render_template("scatter.html", year = year, zip_codes = zip_codes, category_code = category_code, building_code = building_code, basements = basements, central_air = central_air, exterior_condition = exterior_condition, garage_spaces = garage_spaces, fireplaces = fireplaces)
 
+@app.route("/analyzer")
+def analyzer():
+    return render_template("analyzer.html")
+
 # api route to be able to render full dataset using d3.json
 @app.route("/api/v1.0/data")
 def data():
