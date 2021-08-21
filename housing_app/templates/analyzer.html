@@ -15,6 +15,10 @@
     integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
     crossorigin=""/>
 
+    <!-- "Slick Loader" - loading gif - https://github.com/Zenoo/slick-loader -->
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/slick-loader@1.1.20/slick-loader.min.css">
+    <script src="https://unpkg.com/slick-loader@1.1.20/slick-loader.min.js"></script>	
+
     <!-- Link to css files -->
     <link rel="stylesheet" href="../static/css/analyzer.css" />
 
@@ -30,7 +34,15 @@
         <!-- Adapted from https://getbootstrap.com/docs/5.1/examples/checkout/ -->
         <div class="row">
             <div class="col-md-3 col-lg-4">
-                <h5 class="mb-3">Enter Property Address</h5>
+                <!-- <h5 class="mb-3">Enter Property Address</h5> -->
+                <div class="row g-3">
+                    <div class="col-md-7">
+                        <h5 class="mb-3">Enter Property Address</h5>
+                    </div>
+                    <div class="col-md-5">
+                        <button type="button" class="btn btn-primary" id="reset-button">Reset</button>
+                    </div>
+                </div>
                 <form>
                     <div class="row g-3">
                         <div class="col-12">
@@ -142,7 +154,7 @@
                 <!-- Button to compute property analysis -->
                 <div class="row g-3">
                     <div class="d-grid gap-2">
-                        <button type="button" class="btn btn-primary">Compute Property Analysis</button>
+                        <button type="button" class="btn btn-primary" id="submit-button">Compute Property Analysis</button>
                     </div>
                 </div>
                 <!-- END: button to compute property analysis -->

@@ -145,6 +145,21 @@ function computePropertyAnalysis() {
     var compsQueryString = getCompsQueryString();
     var compsDataPromise = getCompsData(compsQueryString);
 
+
+    // ***** To calculate distances, declare empty array variable outside of promise
+    // If you push results into that variable, likely can use it after promise 
+    // Otherwise, can geocode addresses in the back end sql table *****
+
+    // ---------------------------------------------------------
+    // Test Code
+    // Declare empty array to feed compsDataResult into
+    // compsDataArray = [];
+    // testArray = [];
+    // testSort = [];
+    // testArray2 = [];
+    // var distances = [];
+    // ---------------------------------------------------------
+
     // Use promise.all to return both promises, allowing for ability to work with both data results
     // NOTE: comps currently calculating based off of 5 most recent comparable sales
     // AS an enhancement, calculate distance for each record in comps dataset returned back and return the 5 closest rather than 5 most recent
@@ -152,7 +167,45 @@ function computePropertyAnalysis() {
     Promise.all([geocodePromise, compsDataPromise]).then(values => {
       
       var geocodePromiseResult = values[0];
-      var compsDataPromiseResult = values[1];
+      var compsDataPromiseResult = values[1];  
+      
+      // // -----------------------------------------------------
+      // // test code
+      // compsDataArray.push(...compsDataPromiseResult);
+      // console.log(compsDataArray);
+
+      // function testPush(object) {
+      //   distances.push(object);
+      // }
+
+      // compsDataArray.forEach(function(record) {
+      //   var address = `${record.location} Philadelphia PA ${record.zip_code}`;
+      //   var addressGeocodePromise = getCoordsFromAddress(address);
+
+      //   addressGeocodePromise.then(function(response) {
+      //     var addressLatitude = response[1];
+      //     var addressLongitude = response[0];
+      //     var distanceKM = getDistanceFromLatLonInKm(addressLatitude, addressLongitude,latitude,longitude);
+      //     // record["latitude"] = addressLatitude;
+      //     // record["longitude"] = addressLongitude;
+      //     testPush(distanceKM);
+      //     console.log(distances);
+      //   });
+
+      //   // testArray.push(record);
+      // });
+    
+      // console.log(distances);
+
+      // testArray2.push(...testArray);
+      // console.log(testArray2);
+
+      // var sorted_data_distance = testArray2.sort(function(a, b) {
+      //   return a.distance_from_selected - b.distance_from_selected;
+      // });
+
+      // console.log(sorted_data_distance);
+      // -----------------------------------------------------
 
       // Extract longitude/latitude from selected address
       var latitude = geocodePromiseResult[1];
@@ -284,203 +337,11 @@ function computePropertyAnalysis() {
 
       // Calculate monthly mortgage payment for regression valuation
 
-
-      // compsDataPromiseResult.forEach(function(record) {
-      //   var address = `${record.location} Philadelphia PA ${record.zip_code}`;
-      //   var addressGeocodePromise = getCoordsFromAddress(address);
-
-      //   addressGeocodePromise.then(function(response) {
-      //     var addressLatitude = response[1];
-      //     var addressLongitude = response[0];
-      //     var distanceKM = getDistanceFromLatLonInKm(addressLatitude, addressLongitude,latitude,longitude);
-      //     record["latitude"] = addressLatitude;
-      //     record["longitude"] = addressLongitude;
-      //     record["distance_from_selected"] = distanceKM;
-      //   });
-
       });
 
-    // });
-
-    // geocodePromise.then(function(response) {
-    //   var latitude = response[1]
-    //   var longitude = response[0]
-    //   // Define custom color icon
-    //   // Pulled from https://github.com/pointhi/leaflet-color-markers
-    //   var redIcon = new L.Icon({
-    //     iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
-    //     shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-    //     iconSize: [25, 41],
-    //     iconAnchor: [12, 41],
-    //     popupAnchor: [1, -34],
-    //     shadowSize: [41, 41]
-    //   });
-
-    //   var marker = L.marker([latitude,longitude], {icon:redIcon}).addTo(myMap);
-    //   marker.bindPopup(`<b>Selected Address:</b><br>${streetAddress}`);
-    //   // Center map around selected address
-    //   myMap.flyTo(new L.LatLng(latitude, longitude),14);
-      
-    //   return latitude;
     
-    // }).then(function(response2) {
-    //   console.log(latitude);
-    // });
 };
-    // geocodePromise.then(function(result) {
-    //   $scope.coordinateResult = result;
-    // })
-
-    // console.log(geocodePromise);
     
-
-    // var geocodeResult = geocodePromise.then(function(response) {
-    //                 return response;
-    //               })
-    //               .then(function(data) {
-    //                 return data;
-    //               })
-    // console.log(geocodeResult);
-  // // Create address line to pass into geocode
-
-  // var geocodePromise = callGeocodeAPI(selectedAddressLine);
-
-  // compsQueryString = getCompsQueryString();
-  // compsData = getCompsData(compsQueryString);
-
-  // compsData.then(function(response) {
-
-
-  //   for(var i=0; i < response.length + 1; i++) {
-  //     if (i === 0) {
-  //       var geocodePromise = callGeocodeAPI(selectedAddressLine);
-  //     } else {
-  //       var responseAddress = `${response[i-1].location} Philadelphia PA ${response[i-1].zip_code}`;
-  //       var geocodePromise = callGeocodeAPI()
-  //     }
-  //   };
-    // console.log(response);
-    // console.log(selectedAddressLine);
-
-
-
-  // });
-
-  // console.log(compsData);
-
-  // compsData.then(function(response) {
-  //     // Loop through response
-  //     // Calculate longitude and latitude coordinates and attach to response records
-
-  //     var updatedCompsData = response;
-
-  //     updatedCompsData.forEach(function(record) {
-  //       var address = `${record.location} Philadelphia PA ${record.zip_code}`;
-  //       var addressGeocodePromise = callGeocodeAPI(address);
-  //       addressGeocodePromise.then(function(response) {
-  //         var addressCoordinateResult = response.features[0].center;
-  //         var addressLatitude = addressCoordinateResult[1];
-  //         var addressLongitude = addressCoordinateResult[0];
-
-  //         geocodePromise.then(function(response) {
-  //           var coordinateResult = response.features[0].center;
-  //           var latitude = coordinateResult[1]
-  //           var longitude = coordinateResult[0]
-  //           // Define custom color icon
-  //           // Pulled from https://github.com/pointhi/leaflet-color-markers
-  //           var redIcon = new L.Icon({
-  //             iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
-  //             shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-  //             iconSize: [25, 41],
-  //             iconAnchor: [12, 41],
-  //             popupAnchor: [1, -34],
-  //             shadowSize: [41, 41]
-  //           });
-
-  //           var marker = L.marker([latitude,longitude], {icon:redIcon}).addTo(myMap);
-  //           marker.bindPopup(`<b>Selected Address:</b><br>${streetAddress}`);
-  //           // Center map around selected address
-  //           myMap.flyTo(new L.LatLng(latitude, longitude),14);
-  //         });
-
-  //         var distanceKM = getDistanceFromLatLonInKm(addressLatitude, addressLongitude,latitude,longitude);
-  //         record["latitude"] = addressLatitude;
-  //         record["longitude"] = addressLongitude;
-  //         record["distance_from_selected"] = distanceKM;
-  //         // return addressLatitude;
-  //       });
-  //       // record["latitude"] = addressLatitude;
-  //       // record["longitude"] = addressLongitude;
-  //       // record["distance_from_selected"] = distanceKM;
-  //     });
-
-  //     console.log(updatedCompsData);
-  // });
-
-  
-  // Add marker for selected address to map
-  // geocodePromise.then(function(response) {
-  //   var coordinateResult = response.features[0].center;
-  //   var latitude = coordinateResult[1]
-  //   var longitude = coordinateResult[0]
-  //   // Define custom color icon
-  //   // Pulled from https://github.com/pointhi/leaflet-color-markers
-  //   var redIcon = new L.Icon({
-  //     iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
-  //     shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-  //     iconSize: [25, 41],
-  //     iconAnchor: [12, 41],
-  //     popupAnchor: [1, -34],
-  //     shadowSize: [41, 41]
-  //   });
-
-  //   var marker = L.marker([latitude,longitude], {icon:redIcon}).addTo(myMap);
-  //   marker.bindPopup(`<b>Selected Address:</b><br>${streetAddress}`);
-  //   // Center map around selected address
-  //   myMap.flyTo(new L.LatLng(latitude, longitude),14);
-
-  //   return latitude;
-  // })
-
-// };
-
-
-
-
-
-//   // Add marker for selected address to map
-//   geocodePromise.then(function(response) {
-//     var coordinateResult = response.features[0].center;
-//     var latitude = coordinateResult[1]
-//     var longitude = coordinateResult[0]
-//     // Define custom color icon
-//     // Pulled from https://github.com/pointhi/leaflet-color-markers
-//     var redIcon = new L.Icon({
-//       iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
-//       shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-//       iconSize: [25, 41],
-//       iconAnchor: [12, 41],
-//       popupAnchor: [1, -34],
-//       shadowSize: [41, 41]
-//     });
-//     var marker = L.marker([latitude,longitude], {icon:redIcon}).addTo(myMap);
-//     marker.bindPopup(`<b>Selected Address:</b><br>${streetAddress}`);
-//     // Center map around selected address
-//     myMap.flyTo(new L.LatLng(latitude, longitude),14);
-
-//     // Create string to return back data to calculate comp distances
-//     // And ultimately also add to map
-//     compsQueryString = getCompsQueryString();
-//     compsData = getCompsData(compsQueryString);
-
-//       return response;
-//     });
-
-//   };
-
-
-// };
-
 // END: Function to execute upon clicking 'Compute Property Analysis' button
 // ----------
 
@@ -489,6 +350,41 @@ function computePropertyAnalysis() {
 
 // -----------------------------------
 // 4.) EVENT LISTENERS
+
+// ----------
+
+// 4a.) Event listener for pressing "Compute Property Analysis" button
+d3.select("#submit-button").on("click", function () {
+  
+  // Enable slickloader
+  SlickLoader.enable();
+
+  // Run computePropertyAnalysis() function defined above
+  computePropertyAnalysis();
+  
+  // Disable slickloader
+  SlickLoader.disable();
+});
+
+// END: Event listener for pressing "Compute Property Analysis" button
+// ----------
+
+// ----------
+// 4b.) Button to reset page
+d3.select("#reset-button").on("click", function() {
+  // Enable slickloader
+  SlickLoader.enable();
+
+  // Reload page
+  location.reload();
+
+  // Disable slickloader
+  SlickLoader.disable();
+
+});
+
+// END: Button to reset page
+// ----------
 
 // END: EVENT LISTENERS
 // -----------------------------------
