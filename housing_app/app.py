@@ -13,6 +13,7 @@ from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
 from sqlalchemy import create_engine, func
 from sqlalchemy import desc, asc
+from sqlalchemy.sql.expression import select
 # from flask_sqlalchemy import SQLAlchemy
 
 #################################################
@@ -183,6 +184,20 @@ def scatter():
 @app.route("/analyzer")
 def analyzer():
     return render_template("analyzer.html")
+
+@app.route("/comps-drill-through/<selected_address>/<selected_zip_code>/<target_square_footage>/<comp_1_square_footage>/<comp_2_square_footage>/<comp_3_square_footage>/<comp_4_square_footage>/<comp_5_square_footage>/<comp_1_sale_price>/<comp_2_sale_price>/<comp_3_sale_price>/<comp_4_sale_price>/<comp_5_sale_price>")
+def comps_drill_through(selected_address, selected_zip_code, target_square_footage, comp_1_square_footage, comp_2_square_footage, comp_3_square_footage, comp_4_square_footage, comp_5_square_footage, comp_1_sale_price, comp_2_sale_price, comp_3_sale_price, comp_4_sale_price, comp_5_sale_price):
+    return render_template("comps-drill-through.html", selected_address = selected_address, selected_zip_code = selected_zip_code, target_square_footage = target_square_footage,
+                            comp_1_square_footage = comp_1_square_footage,
+                            comp_2_square_footage = comp_2_square_footage,
+                            comp_3_square_footage = comp_3_square_footage,
+                            comp_4_square_footage = comp_4_square_footage,
+                            comp_5_square_footage = comp_5_square_footage,
+                            comp_1_sale_price = comp_1_sale_price,
+                            comp_2_sale_price = comp_2_sale_price,
+                            comp_3_sale_price = comp_3_sale_price,
+                            comp_4_sale_price = comp_4_sale_price,
+                            comp_5_sale_price = comp_5_sale_price)
 
 # api route to be able to render full dataset using d3.json
 @app.route("/api/v1.0/data")

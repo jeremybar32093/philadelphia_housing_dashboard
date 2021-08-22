@@ -86,8 +86,26 @@ function calcMonthlyPayment(price, downPayment, interestRate, mortgageLength) {
 
 }
 
+// ----------
+// END: Function to calculate principal and interest payment
+
+// ---------------------------------------------------------
+// test code
+// ----------
+// 1f.) Calculate distance from geocode promise
+// var latitudes = [];
+// var longitudes = [];
+// function calcDistanceFromGeocodePromise(promise) {
+//   promise.then(function(response) {
+//     var addressLatitude = response[1];
+//     var addressLongitude = response[0];
+//     latitudes.push(addressLatitude);
+//     longitudes.push(addressLongitude);
+//   })
+// }
 
 // ----------
+// ---------------------------------------------------------
 
 
 // END: HELPER FUNCTION DEFINITIONS
@@ -172,11 +190,40 @@ function computePropertyAnalysis() {
       // // -----------------------------------------------------
       // // test code
       // compsDataArray.push(...compsDataPromiseResult);
-      // console.log(compsDataArray);
+      // // console.log(compsDataArray);
+
+
+      // distances = compsDataArray.map(function (record) {
+      //   var address = `${record.location} Philadelphia PA ${record.zip_code}`;
+      //   var addressGeocodePromise = getCoordsFromAddress(address);
+      //   return addressGeocodePromise;
+      //   // addressGeocodePromise.then(function(response) {
+      //   //   var addressLatitude = response[1];
+      //   //   var addressLongitude = response[0];
+      //   //   var distanceKM = getDistanceFromLatLonInKm(addressLatitude, addressLongitude,latitude,longitude);
+      //   //   return distanceKM;
+      //   // });
+      //   // return distanceKM;
+      // })
+
+      // console.log(distances);
 
       // function testPush(object) {
       //   distances.push(object);
       // }
+
+
+      // compsDataArray.forEach(function(record) {
+      //   var address = `${record.location} Philadelphia PA ${record.zip_code}`;
+      //   var addressGeocodePromise = getCoordsFromAddress(address);
+      //   calcDistanceFromGeocodePromise(addressGeocodePromise);
+      //   // distances.push(distanceValue);
+      // })
+
+      // console.log(latitudes);
+
+      // var test = latitudes.map(x => x+1);
+      // console.log(test);
 
       // compsDataArray.forEach(function(record) {
       //   var address = `${record.location} Philadelphia PA ${record.zip_code}`;
@@ -256,8 +303,7 @@ function computePropertyAnalysis() {
       // Map each comp result and list relevant information
       var counter = 0;
       top5values.forEach(function(record) {
-        // Define counter to display in html tooltip
-        counter +=1;
+
         // Declare address to pass into mapbox API and retrieve result
         var address = `${record.location} Philadelphia PA ${record.zip_code}`;
         var addressGeocodePromise = getCoordsFromAddress(address);
@@ -282,6 +328,7 @@ function computePropertyAnalysis() {
         
         // Create markers for 
         addressGeocodePromise.then(function(response) {
+          counter += 1;
           var addressLatitude = response[1];
           var addressLongitude = response[0];
           var compMarker = L.marker([addressLatitude,addressLongitude]).addTo(myMap);
@@ -336,6 +383,35 @@ function computePropertyAnalysis() {
       salePriceMonthlyPaymentResult.text(`$${formatComma(Math.round(salePriceMonthlyPayment))}`);
 
       // Calculate monthly mortgage payment for regression valuation
+
+      // Change URLs in table to be clickable - remove "disabled-href" class
+      var compsURL = d3.select("#comp-valuation-href");
+      compsURL.classed("disabled-href", false);
+
+      var regressionURL = d3.select("#regression-valuation-href");
+      regressionURL.classed("disabled-href", false);
+
+      var overallURL = d3.select("#overall-valuation-href");
+      overallURL.classed("disabled-href", false);
+
+      // Update hrefs of URLs to take in relevant output results
+      // Declare relevant output variables to be passed into drill-through URL
+      var targetPropertySquareFootage = d3.select("#square_feet").property("value")
+      var comp1SquareFootage = top5values[0].total_liveable_area;
+      var comp2SquareFootage = top5values[1].total_liveable_area;
+      var comp3SquareFootage = top5values[2].total_liveable_area
+      var comp4SquareFootage = top5values[3].total_liveable_area
+      var comp5SquareFootage = top5values[4].total_liveable_area
+
+      var comp1SalePrice = top5values[0].sale_price
+      var comp2SalePrice = top5values[1].sale_price
+      var comp3SalePrice = top5values[2].sale_price
+      var comp4SalePrice = top5values[3].sale_price
+      var comp5SalePrice = top5values[4].sale_price
+
+      compsURLNewHref = `/comps-drill-through/${streetAddress}/${zipCode}/${targetPropertySquareFootage}/${comp1SquareFootage}/${comp2SquareFootage}/${comp3SquareFootage}/${comp4SquareFootage}/${comp5SquareFootage}/${comp1SalePrice}/${comp2SalePrice}/${comp3SalePrice}/${comp4SalePrice}/${comp5SalePrice}`;
+      
+      compsURL.attr("href",compsURLNewHref);
 
       });
 
