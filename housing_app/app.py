@@ -13,6 +13,7 @@ from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
 from sqlalchemy import create_engine, func
 from sqlalchemy import desc, asc
+from sqlalchemy.sql.expression import select
 # from flask_sqlalchemy import SQLAlchemy
 
 #################################################
@@ -184,6 +185,20 @@ def scatter():
 def analyzer():
     return render_template("analyzer.html")
 
+@app.route("/comps-drill-through/<selected_address>/<selected_zip_code>/<target_square_footage>/<comp_1_square_footage>/<comp_2_square_footage>/<comp_3_square_footage>/<comp_4_square_footage>/<comp_5_square_footage>/<comp_1_sale_price>/<comp_2_sale_price>/<comp_3_sale_price>/<comp_4_sale_price>/<comp_5_sale_price>")
+def comps_drill_through(selected_address, selected_zip_code, target_square_footage, comp_1_square_footage, comp_2_square_footage, comp_3_square_footage, comp_4_square_footage, comp_5_square_footage, comp_1_sale_price, comp_2_sale_price, comp_3_sale_price, comp_4_sale_price, comp_5_sale_price):
+    return render_template("comps-drill-through.html", selected_address = selected_address, selected_zip_code = selected_zip_code, target_square_footage = target_square_footage,
+                            comp_1_square_footage = comp_1_square_footage,
+                            comp_2_square_footage = comp_2_square_footage,
+                            comp_3_square_footage = comp_3_square_footage,
+                            comp_4_square_footage = comp_4_square_footage,
+                            comp_5_square_footage = comp_5_square_footage,
+                            comp_1_sale_price = comp_1_sale_price,
+                            comp_2_sale_price = comp_2_sale_price,
+                            comp_3_sale_price = comp_3_sale_price,
+                            comp_4_sale_price = comp_4_sale_price,
+                            comp_5_sale_price = comp_5_sale_price)
+
 # api route to be able to render full dataset using d3.json
 @app.route("/api/v1.0/data")
 def data():
@@ -324,15 +339,97 @@ def data():
 
     return jsonify(houses)
 
-#     **Way of pulling in params from html filters - use JS to create query string**
-#     Query using sqlalchemy 
-#     d3.json
+# api route to be able to render dataset to be used in comps valuation
+@app.route("/api/v1.0/data/comps")
+def compValuation():
+    # Create our session (link) from Python to the DB
+    session = Session(engine)
 
+    # Extract variables from query string
+    zip_selected = request.args.get('zip')
+    zip_query = f'zip_code = {zip_selected}'
 
+    bedrooms_selected = request.args.get('number_bedrooms')
+    bedroom_query = f'number_of_bedrooms = {bedrooms_selected}'
 
-## TO DO: 
-# Add API route
-# Add homepage(index.html) route
+    bathrooms_selected = request.args.get('number_bathrooms')
+    bathroom_query = f'number_of_bathrooms = {bathrooms_selected}'
+
+    square_footage_selected = request.args.get('square_footage')
+    # For square footage, return back records within 120 sq. feet
+    # Assumes standard bedroom is 10x12
+    square_footage_lower_bound = int(square_footage_selected) - 120
+    square_footage_upper_bound = int(square_footage_selected) + 120
+    square_footage_query_1 = f'total_liveable_area >= {square_footage_lower_bound}'
+    square_footage_query_2 = f'total_liveable_area <= {square_footage_upper_bound}'
+
+    parking_spaces_selected = request.args.get('parking_spaces')
+    parking_spaces_query = f'garage_spaces = {parking_spaces_selected}'
+
+    sql_query = f"""SELECT * FROM philadelphia_home_sales
+                    WHERE {zip_query}
+                    AND {bedroom_query}
+                    AND {bathroom_query}
+                    AND {square_footage_query_1}
+                    AND {square_footage_query_2}
+                    AND {parking_spaces_query}"""
+
+    print(sql_query)
+    results = session.execute(sql_query)
+
+    # Close session
+    session.close()
+
+    # Parse results from sql query and create JSON response
+    houses = []
+    for result in results:
+        houses_dict = {}
+        houses_dict["id"] = result.id
+        houses_dict["basements"] = result.basements
+        houses_dict["building_code_description"] = result.building_code_description
+        houses_dict["category_code_description"] = result.category_code_description
+        houses_dict["census_tract"] = result.census_tract
+        houses_dict["central_air"] = result.central_air
+        houses_dict["depth"] = result.depth
+        houses_dict["exempt_building"] = result.exempt_building
+        houses_dict["exempt_land"] = result.exempt_land
+        houses_dict["exterior_condition"] = result.exterior_condition
+        houses_dict["fireplaces"] = result.fireplaces
+        houses_dict["frontage"] = result.frontage
+        houses_dict["fuel"] = result.fuel
+        houses_dict["garage_spaces"] = result.garage_spaces
+        houses_dict["garage_type"] = result.garage_type
+        houses_dict["geographic_ward"] = result.geographic_ward
+        houses_dict["interior_condition"] = result.interior_condition
+        houses_dict["location"] = result.location
+        houses_dict["market_value"] = result.market_value
+        houses_dict["market_value_date"] = result.market_value_date
+        houses_dict["number_of_bathrooms"] = result.number_of_bathrooms
+        houses_dict["number_of_bedrooms"] = result.number_of_bedrooms
+        houses_dict["number_of_rooms"] = result.number_of_rooms
+        houses_dict["number_stories"] = result.number_stories
+        houses_dict["quality_grade"] = result.quality_grade
+        houses_dict["sale_date"] = result.sale_date
+        houses_dict["sale_price"] = result.sale_price
+        houses_dict["street_designation"] = result.street_designation
+        houses_dict["street_direction"] = result.street_direction
+        houses_dict["street_name"] = result.street_name
+        houses_dict["taxable_building"] = result.taxable_building
+        houses_dict["taxable_land"] = result.taxable_land
+        houses_dict["topography"] = result.topography
+        houses_dict["total_area"] = result.total_area
+        houses_dict["total_liveable_area"] = result.total_liveable_area
+        houses_dict["type_heater"] = result.type_heater
+        houses_dict["unit"] = result.unit
+        houses_dict["view_type"] = result.view_type
+        houses_dict["year_built"] = result.year_built
+        houses_dict["year_built_estimate"] = result.year_built_estimate
+        houses_dict["zip_code"] = result.zip_code
+
+        houses.append(houses_dict)
+
+    return jsonify(houses)
+
 
 
 #################################################

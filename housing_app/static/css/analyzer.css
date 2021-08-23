@@ -5,3 +5,10 @@
 .freddie-mac-scrape {
     margin-top: 31px;
 }
+
+.disabled-href {
+    pointer-events: none;
+    cursor: default;
+    text-decoration: none;
+    color: black;
+}

@@ -15,6 +15,10 @@
     integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
     crossorigin=""/>
 
+    <!-- "Slick Loader" - loading gif - https://github.com/Zenoo/slick-loader -->
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/slick-loader@1.1.20/slick-loader.min.css">
+    <script src="https://unpkg.com/slick-loader@1.1.20/slick-loader.min.js"></script>	
+
     <!-- Link to css files -->
     <link rel="stylesheet" href="../static/css/analyzer.css" />
 
@@ -30,7 +34,15 @@
         <!-- Adapted from https://getbootstrap.com/docs/5.1/examples/checkout/ -->
         <div class="row">
             <div class="col-md-3 col-lg-4">
-                <h5 class="mb-3">Enter Property Address</h5>
+                <!-- <h5 class="mb-3">Enter Property Address</h5> -->
+                <div class="row g-3">
+                    <div class="col-md-7">
+                        <h5 class="mb-3">Enter Property Address</h5>
+                    </div>
+                    <div class="col-md-5">
+                        <button type="button" class="btn btn-primary" id="reset-button">Reset</button>
+                    </div>
+                </div>
                 <form>
                     <div class="row g-3">
                         <div class="col-12">
@@ -142,7 +154,7 @@
                 <!-- Button to compute property analysis -->
                 <div class="row g-3">
                     <div class="d-grid gap-2">
-                        <button type="button" class="btn btn-primary">Compute Property Analysis</button>
+                        <button type="button" class="btn btn-primary" id="submit-button">Compute Property Analysis</button>
                     </div>
                 </div>
                 <!-- END: button to compute property analysis -->
@@ -164,19 +176,19 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Comps</td>
-                            <td>XXXX</td>
-                            <td>XXXX</td>
+                            <td><a class="disabled-href" href="/" id="comp-valuation-href" target="_blank">Comps</a></td>
+                            <td id="comp-valuation-result">$-</td>
+                            <td id="comp-valuation-over-under">$-</td>
                         </tr>
                         <tr>
-                            <td>Regression</td>
-                            <td>XXXX</td>
-                            <td>XXXX</td>
+                            <td><a class="disabled-href" href="/"  id="regression-valuation-href" target="_blank">Regression</a></td>
+                            <td id="regression-valuation-result">$-</td>
+                            <td id="regression-valuation-over-under">$-</td>
                         </tr>
                         <tr>
-                            <td>Overall</td>
-                            <td>XXXX</td>
-                            <td>XXXX</td>
+                            <td><a class="disabled-href" href="/"  id="overall-valuation-href" target="_blank">Overall</a></td>
+                            <td id="overall-valuation-result">$-</td>
+                            <td id="overall-valuation-over-under">$-</td>
                         </tr>
                     </tbody>
                 </table>
@@ -188,22 +200,22 @@
                     <table class="table table-borderless">
                         <tr>
                             <td>
-                                At Current Listing: <span>XXXXX</span>
+                                At Current Listing: <span id="current-listing-monthly-payment">$-</span>
                             </td>        
                         </tr>
                         <tr>
                             <td>
-                                At Current Sale Price: <span>XXXXX</span>
+                                At Current Sale Price: <span id="current-sale-price-monthly-payment">$-</span>
                             </td>        
                         </tr>
                         <tr>
                             <td>
-                                At Comp Valuation: <span>XXXXX</span>
+                                At Comp Valuation: <span id="comp-valuation-monthly-payment">$-</span>
                             </td>        
                         </tr>
                         <tr>
                             <td>
-                                At Regression Evaluation: <span>XXXXX</span>
+                                At Regression Valuation: <span id="regression-valuation-monthly-payment">$-</span>
                             </td>        
                         </tr>
                     </table>
