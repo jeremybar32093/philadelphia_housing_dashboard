@@ -147,6 +147,10 @@ accessToken: API_KEY
 // 3a.) Function to execute upon clicking 'Compute Property Analysis' button
 
 function computePropertyAnalysis() {
+
+    // SlickLoader.enable();
+
+    // d3.event.preventDefault();
   
     // Retrieve parameters entered in property address section
     var streetAddress = d3.select("#address").property("value");
@@ -170,102 +174,37 @@ function computePropertyAnalysis() {
 
     // ---------------------------------------------------------
     // Test Code
-    // Declare empty array to feed compsDataResult into
+    // Declare empty array to feed compsDataResult into as well as sorted data by distnace
     var compsDataArray = [];
     var sorted_data_distance = [];
-    // var testArray = [];
-    // var testSort = [];
-    // var testArray2 = [];
-    // var distances = [];
     // ---------------------------------------------------------
 
     // Use promise.all to return both promises, allowing for ability to work with both data results
-    // NOTE: comps currently calculating based off of 5 most recent comparable sales
-    // AS an enhancement, calculate distance for each record in comps dataset returned back and return the 5 closest rather than 5 most recent
-    // In order to execute this, likely need to geocode dataset on the back end
+    // (promise for selected target address, and promise for returned comparables data)
     Promise.all([geocodePromise, compsDataPromise]).then(values => {
       
       var geocodePromiseResult = values[0];
       var compsDataPromiseResult = values[1];  
+    
+      compsDataArray.push(...compsDataPromiseResult);
       
-      // // -----------------------------------------------------
-      // // test code
-      // compsDataArray.push(...compsDataPromiseResult);
-      // console.log(compsDataArray);
-
-
-      // distances = compsDataArray.map(function (record) {
-      //   var address = `${record.location} Philadelphia PA ${record.zip_code}`;
-      //   var addressGeocodePromise = getCoordsFromAddress(address);
-      //   // return addressGeocodePromise;
-      //   addressGeocodePromise.then(function(response) {
-      //     var addressLatitude = response[1];
-      //     var addressLongitude = response[0];
-      //     var distanceKM = getDistanceFromLatLonInKm(addressLatitude, addressLongitude,latitude,longitude);
-      //     return distanceKM;
-      //   });
-      //   return distanceKM;
-      // })
-
-      // console.log(distances);
-
-      // function testPush(object) {
-      //   distances.push(object);
-      // }
-
-
-      // compsDataArray.forEach(function(record) {
-      //   var address = `${record.location} Philadelphia PA ${record.zip_code}`;
-      //   var addressGeocodePromise = getCoordsFromAddress(address);
-      //   calcDistanceFromGeocodePromise(addressGeocodePromise);
-      //   distances.push(distanceValue);
-      // })
-
-      // console.log(distances);
-
-      // console.log(latitudes);
-
-      // var test = latitudes.map(x => x+1);
-      // console.log(test);
-
-
       // Extract longitude/latitude from selected address
       var latitude = geocodePromiseResult[1];
       var longitude = geocodePromiseResult[0];
 
+      // Calculate distance from selected address to returned addresses from database
       compsDataArray.forEach(function(record) {
-        var address = `${record.location} Philadelphia PA ${record.zip_code}`;
-        var addressGeocodePromise = getCoordsFromAddress(address);
+        var addressLatitude = record.latitude;
+        var addressLongitude = record.longitude;
+        var distanceKM = getDistanceFromLatLonInKm(addressLatitude, addressLongitude,latitude,longitude);
+        record.distance_from_selected = distanceKM;
+      })
 
-        addressGeocodePromise.then(function(response) {
-          var addressLatitude = response[1];
-          var addressLongitude = response[0];
-          var distanceKM = getDistanceFromLatLonInKm(addressLatitude, addressLongitude,latitude,longitude);
-          record.latitude = addressLatitude;
-          record.longitude = addressLongitude;
-          record.distance_from_selected = distanceKM;
-          // testPush(distanceKM);
-          // console.log(distances);
-        });
+      // Sort dataset that now includes distance by smallest -> largest distance
+      // top 5 closest properties from dataset will be selected comparable properties
+      sorted_data_distance = compsDataArray.sort( (a, b) => a.distance_from_selected - b.distance_from_selected);
 
-        // testArray.push(record);
-      });
-    
-      // console.log(distances);
-
-      // // testArray2.push(...testArray);
-      // console.log(testArray);
-
-      sorted_data_distance = compsDataArray.sort(function(a, b) {
-        return a.distance_from_selected - b.distance_from_selected;
-      });
-
-      // console.log(sorted_data_distance);
       // -----------------------------------------------------
-
-      // Extract longitude/latitude from selected address
-      // var latitude = geocodePromiseResult[1];
-      // var longitude = geocodePromiseResult[0];
 
       // Add selected address to map -> use red icon to make it stand out
       // Adapted from https://github.com/pointhi/leaflet-color-markers
@@ -283,13 +222,6 @@ function computePropertyAnalysis() {
       marker.bindPopup(`<b>Selected Address:</b><br>${streetAddress}`);
       // Center map around selected address
       myMap.flyTo(new L.LatLng(latitude, longitude),14);
-
-      // Sort filtered dataset based on most recent
-      var sorted_data = compsDataPromiseResult.sort(function(a,b) {
-        // Turn your strings into dates, and then subtract them
-        // to get a value that is either negative, positive, or zero.
-        return new Date(b.sale_date) - new Date(a.sale_date);
-      });
 
       // Grab 5 most recent comparible sales
       // var top5values = sorted_data.slice(0,5);
@@ -314,11 +246,6 @@ function computePropertyAnalysis() {
       var counter = 0;
       top5values.forEach(function(record) {
 
-        // Declare address to pass into mapbox API and retrieve result
-        var address = `${record.location} Philadelphia PA ${record.zip_code}`;
-        var addressGeocodePromise = getCoordsFromAddress(address);
-        console.log(addressGeocodePromise);
-
         // Declare variables for results to be displayed in comp marker tooltips
 
         var formatComma = d3.format(",");
@@ -335,26 +262,23 @@ function computePropertyAnalysis() {
         var currYear = new Date().getFullYear();
         var compAge = currYear - record.year_built; 
         
+        // Map relevant comp addresses
+        var addressLatitude = record.latitude;
+        var addressLongitude = record.longitude;
+        var compMarker = L.marker([addressLatitude,addressLongitude]).addTo(myMap);
+        counter++;
+        compMarker.bindPopup(`<b>Comp ${counter}: ${streetAddress}</b>
+                                 <br>
+                                 <ul>
+                                 <li>Sale Date: ${saleDate}</li>
+                                 <li>Sale Price: $${salePrice}</li>
+                                 <li>Total Rooms: ${totalRooms}</li>
+                                 <li>Bedrooms: ${bedrooms}</li>
+                                 <li>Bathrooms: ${bathrooms}</li>
+                                 <li>Square Footage: ${squareFootage}</li>
+                                 <li>Age: ${compAge}</li>
+                                 </ul>`);
         
-        // Create markers for 
-        addressGeocodePromise.then(function(response) {
-          counter += 1;
-          var addressLatitude = response[1];
-          var addressLongitude = response[0];
-          var compMarker = L.marker([addressLatitude,addressLongitude]).addTo(myMap);
-          compMarker.bindPopup(`<b>Comp ${counter}: ${streetAddress}</b>
-                                <br>
-                                <ul>
-                                <li>Sale Date: ${saleDate}</li>
-                                <li>Sale Price: $${salePrice}</li>
-                                <li>Total Rooms: ${totalRooms}</li>
-                                <li>Bedrooms: ${bedrooms}</li>
-                                <li>Bathrooms: ${bathrooms}</li>
-                                <li>Square Footage: ${squareFootage}</li>
-                                <li>Age: ${compAge}</li>
-                                </ul>`);
-        });
-
       });
 
       // Update table with comp valuation result
@@ -425,6 +349,7 @@ function computePropertyAnalysis() {
 
       });
 
+      SlickLoader.disable();
     
 };
     
@@ -449,7 +374,7 @@ d3.select("#submit-button").on("click", function () {
   computePropertyAnalysis();
   
   // Disable slickloader
-  SlickLoader.disable();
+  // SlickLoader.disable();
 });
 
 // END: Event listener for pressing "Compute Property Analysis" button

@@ -14,6 +14,9 @@ from sqlalchemy.orm import Session
 from sqlalchemy import create_engine, func
 from sqlalchemy import desc, asc
 from sqlalchemy.sql.expression import select
+import requests
+import json
+import urllib
 # from flask_sqlalchemy import SQLAlchemy
 
 #################################################
@@ -427,6 +430,25 @@ def compValuation():
         houses_dict["zip_code"] = result.zip_code
 
         houses.append(houses_dict)
+
+    # Loop through houses, call mapbox api via python requests 
+    # Define target URLs/API Key
+    geocode_base_url = "https://api.mapbox.com/geocoding/v5/mapbox.places/"
+    api_key = "pk.eyJ1IjoiZGVhbmdlbG8wMTEiLCJhIjoiY2tyY29kczNhMDNlNTJ2bGoxN3hjb3VmbCJ9.7be9sZjriLihjaUV0IV-Sw"
+
+    for house in houses:
+        street_address = house["location"]
+        zip_code = house["zip_code"]
+        full_address = f"{street_address} Philadelphia PA {zip_code}"
+        full_address_encoded = urllib.parse.quote(full_address, safe="")
+        target_url = f"{geocode_base_url}{full_address_encoded}.json?access_token={api_key}"
+        geo_data = requests.get(target_url).json()
+        coordinates = geo_data["features"][0]["center"]
+        longitude = coordinates[0]
+        latitude = coordinates[1]
+        house["longitude"] = longitude
+        house["latitude"] = latitude
+
 
     return jsonify(houses)
 
