@@ -1,24 +1,127 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Comps Valuation</title>
+
+    <!-- Bootstrap CSS/Javascript -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+
+    <!-- Link to css files -->
+    <link rel="stylesheet" href="../static/css/comps-drill-through.css" />
+
+    <link rel="stylesheet" href="../static/css/dashboard.css" />
+
 </head>
-<body>
-    <p>Selected Address: {{ selected_address }}</p>
-    <p>Selected Zip Code: {{ selected_zip_code }}</p>
-    <p>Target Square Footage: {{ target_square_footage }}</p>
-    <p>Comp 1 Square Footage: {{ comp_1_square_footage }}</p>
-    <p>Comp 2 Square Footage: {{ comp_2_square_footage }}</p>
-    <p>Comp 3 Square Footage: {{ comp_3_square_footage }}</p>
-    <p>Comp 4 Square Footage: {{ comp_4_square_footage }}</p>
-    <p>Comp 5 Square Footage: {{ comp_5_square_footage }}</p>
-    <p>Comp 1 Sale Price: {{ comp_1_sale_price }}</p>
-    <p>Comp 2 Sale Price: {{ comp_2_sale_price }}</p>
-    <p>Comp 3 Sale Price: {{ comp_3_sale_price }}</p>
-    <p>Comp 4 Sale Price: {{ comp_4_sale_price }}</p>
-    <p>Comp 5 Sale Price: {{ comp_5_sale_price }}</p>
+
+<body class="preload">
+
+
+    <header class="header">
+        <button class="header_button" id="btnNav" type="button">
+            <i class="material-icons">menu</i>
+        </button>
+    </header>
+    
+    
+    <!--NAV BAR-->
+    <nav class="nav">
+        <div class="nav_links">
+            <a class="nav_link nav_link-active" href="/">
+                Dashboard
+            </a>
+            <a href="comps" class="nav_link">
+                Comps Analysis
+            </a>
+            <a href="scatter" class="nav_link">
+                Scatter Plot
+            </a>
+            <a class="nav_link" href="line">
+                Line Chart
+            </a>
+            <a class="nav_link" href="map">
+                Map
+            </a>
+        </div>
+        <div class="nav_overlay"></div>
+    </nav>
+
+
+    <table>
+        <tr>
+            <th>Selected address</th>
+            <th>Selected zip code</th>
+            <th>Target square footage</th>
+        </tr>
+        <tr>
+            <td>{{ selected_address }}</td>
+            <td>{{ selected_zip_code }}</td>
+            <td>{{ target_square_footage }}</td>
+        </tr>
+    </table>
+
+    <br><br>
+
+    <h5>Comps Valuation</h5>
+
+    <table>
+        <tr>
+            <th>&nbsp;</th>
+            <th>Square Footage</th>
+            <th>Sale Price</th>
+        </tr>
+        <tr>
+            <td>Comp 1</td>
+            <td>{{ comp_1_square_footage }}</td>
+            <td>{{ comp_1_sale_price }}</td>
+        </tr>
+        <tr>
+            <td>Comp 2</td>
+            <td>{{ comp_2_square_footage }}</td>
+            <td>{{ comp_2_sale_price }}</td>
+
+        </tr>
+        <tr>
+            <td>Comp 3</td>
+            <td>{{ comp_3_square_footage }}</td>
+            <td>{{ comp_3_sale_price }}</td>
+
+        </tr>
+        <tr>
+            <td>Comp 4</td>
+            <td>{{ comp_4_square_footage }}</td>
+            <td>{{ comp_4_sale_price }}</td>
+
+        </tr>
+        <tr>
+            <td>Comp 5</td>
+            <td>{{ comp_5_square_footage }}</td>
+            <td>{{ comp_5_sale_price }}</td>
+        </tr>
+        <tr>
+            <th>Total</th>
+            <td></td>
+            <td>
+        </tr>
+    </table>
+
+    <br><br>
+
+    <b>Average Price/Sq. Ft. =</b>
+
 </body>
+
+<!-- Script for d3 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.min.js"></script>
+
+<!-- Script for analyzer javascript logic -->
+<script src="{{ url_for('static', filename='js/config.js') }}"></script>
+<script src="{{ url_for('static', filename='js/analyzer.js') }}"></script>
+
+
+
 </html>
