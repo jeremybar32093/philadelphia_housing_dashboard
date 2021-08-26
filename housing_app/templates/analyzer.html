@@ -84,33 +84,57 @@
                         </div>
                     </div>
                     <div class="row g-3">
-                        <div class="col-6">
-                            <label for="number_bedrooms" class="form-label"># of Bedrooms:</label>
+                        <div class="col-4">
+                            <label for="number_bedrooms" class="form-label">Bedrooms:</label>
                             <input type="text" class="form-control" id="number_bedrooms">
                         </div>
-                        <div class="col-6">
-                            <label for="number_bathrooms" class="form-label"># of Bathrooms:</label>
+                        <div class="col-4">
+                            <label for="number_bathrooms" class="form-label">Bathrooms:</label>
                             <input type="text" class="form-control" id="number_bathrooms">
                         </div>
-                    </div>
-                    <div class="row g-3">
-                        <div class="col-6">
+                        <div class="col-4">
                             <label for="square_feet" class="form-label">Square Feet:</label>
                             <input type="text" class="form-control" id="square_feet">
                         </div>
+                    </div>
+                    <div class="row g-3">
                         <div class="col-6">
                             <label for="year_built" class="form-label">Year Built:</label>
                             <input type="text" class="form-control" id="year_built">
                         </div>
-                    </div>
-                    <div class="row g-3">
                         <div class="col-6">
                             <label for="parking_spaces" class="form-label">Parking Spaces:</label>
                             <input type="text" class="form-control" id="parking_spaces">
                         </div>
+                    </div>
+                    <div class="row g-3">
                         <div class="col-6">
-                            <label for="lot_size" class="form-label">Lot size:</label>
-                            <input type="text" class="form-control" id="lot_size">
+                            <label for="finished_basement">Finished Basement? </label>
+                            <select class="form-select" name="finished_basement" id="finished_basement">
+                                <option value="1" selected>Y</option>
+                                <option value="0">N</option>
+                            </select>
+                        </div>
+                        <div class="col-6">
+                            <label for="central_air">Central Air? </label>
+                            <select class="form-select" name="central_air" id="central_air">
+                                <option value="1" selected>Y</option>
+                                <option value="0">N</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <label for="interior_condition">Interior Condition: </label>
+                            <select class="form-select" name="interior_condition" id="interior_condition">
+                                <option value="0" selected>Select Interior Condition</option>
+                                <option value="2" >New Construction/Rehab</option>
+                                <option value="3">Above Average</option>
+                                <option value="4">Average</option>
+                                <option value="5">Below Average</option>
+                                <option value="6">Vacant</option>
+                                <option value="7">Sealed/Structurally Compromised</option>
+                            </select>
                         </div>
                     </div>
                 </form>
