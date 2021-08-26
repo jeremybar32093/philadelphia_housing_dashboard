@@ -202,6 +202,11 @@ def comps_drill_through(selected_address, selected_zip_code, target_square_foota
                             comp_4_sale_price = comp_4_sale_price,
                             comp_5_sale_price = comp_5_sale_price)
 
+
+@app.route("/model-drill-through/")
+def model_drill_through():
+    return render_template("model-drill-through.html")
+
 # api route to be able to render full dataset using d3.json
 @app.route("/api/v1.0/data")
 def data():
@@ -451,6 +456,51 @@ def compValuation():
 
 
     return jsonify(houses)
+
+# route to pull regression model coefficients
+@app.route("/api/v1.0/data/coefficients")
+def coefficients():
+    # Create our session (link) from Python to the DB
+    session = Session(engine)
+
+    # Define sql query to return model coefficients and corresponding inputs
+    sql_query = "SELECT inputs, coefficient FROM model_coefficients"
+    results = session.execute(sql_query)
+
+    # Close session
+    session.close()
+
+    # Loop through result set and return json
+    coefficient_dict = {}
+    for result in results:
+        curr_key = result.inputs
+        curr_coefficient = result.coefficient
+        coefficient_dict[curr_key] = curr_coefficient
+        
+
+    return jsonify(coefficient_dict)
+
+# route to pull regression model r^2 value
+@app.route("/api/v1.0/data/rsquared")
+def rsquared():
+    # Create our session (link) from Python to the DB
+    session = Session(engine)
+    
+    # Define sql query to return model r^2 value
+    sql_query = "SELECT r2 from r2_value"
+    results = session.execute(sql_query)
+
+    session.close()
+
+    # Loop through result set and return json
+    r2_list = []
+    for result in results:
+        r2_dict = {}
+        r2_dict["rsquared"] = result.r2
+        r2_list.append(r2_dict)
+        
+
+    return jsonify(r2_list)
 
 
 

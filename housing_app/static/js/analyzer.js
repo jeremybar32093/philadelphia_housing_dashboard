@@ -89,24 +89,32 @@ function calcMonthlyPayment(price, downPayment, interestRate, mortgageLength) {
 // ----------
 // END: Function to calculate principal and interest payment
 
-// ---------------------------------------------------------
-// test code
 // ----------
-// 1f.) Calculate distance from geocode promise
-// var latitudes = [];
-// var longitudes = [];
-// function calcDistanceFromGeocodePromise(promise) {
-//   promise.then(function(response) {
-//     var addressLatitude = response[1];
-//     var addressLongitude = response[0];
-//     latitudes.push(addressLatitude);
-//     longitudes.push(addressLongitude);
-//   })
-// }
+// 1f.) Function to pull regression model coefficients from database
+
+function getRegressionCoefficients() {
+  var query_url = '/api/v1.0/data/coefficients'
+  var regressionCoefficients = d3.json(query_url).then(function (response) {
+    return response;
+  })
+  return regressionCoefficients;
+}
+
+// END: Function to pull regression model coefficients from database
+// ----------
 
 // ----------
-// ---------------------------------------------------------
+// 1g.) Function to pull regression model r^2 value from database
+function getRegressionRSquared () {
+  var query_url = '/api/v1.0/data/rsquared';
+  var regressionRSquared = d3.json(query_url).then(function (response) {
+    return response;
+  })
+  return regressionRSquared;
+}
 
+// END: Function to pull regression model r^2 value from database
+// ----------
 
 // END: HELPER FUNCTION DEFINITIONS
 // -----------------------------------
@@ -144,9 +152,9 @@ accessToken: API_KEY
 // 3.) CODE TO EXECUTE UPON CALCULATING ANALYSIS
 
 // ----------
-// 3a.) Function to execute upon clicking 'Compute Property Analysis' button
+// 3a.) Function to perform all operations related to computing comps analysis
 
-function computePropertyAnalysis() {
+function computeCompsAnalysis() {
 
     // SlickLoader.enable();
 
@@ -349,11 +357,70 @@ function computePropertyAnalysis() {
 
       });
 
-      SlickLoader.disable();
+      // SlickLoader.disable();
     
 };
     
-// END: Function to execute upon clicking 'Compute Property Analysis' button
+// END: Function to perform all operations related to computing comps analysis
+// ----------
+
+// ----------
+// 3b.) Function to perform all operations related to computing regression analysis
+
+function computeRegressionAnalysis() {
+
+  // Create JSON promise for regression coefficients
+  var coefficientsPromise = getRegressionCoefficients();
+  // Create JSON promise for regression r^2
+  var rSquaredPromise = getRegressionRSquared();
+
+  // When both promise results are returned, execute remaining downstream logic
+  Promise.all([coefficientsPromise, rSquaredPromise]).then(values => {
+    var coefficientResults = values[0];
+    var rSquaredResults = values[1];
+
+    // Get inputs to be used in regression calculations
+    var finishedBasement = d3.select("#finished_basement").property("value");
+    var centralAir = d3.select("#central_air").property("value");
+    var numberOfBedrooms = d3.select("#number_bedrooms").property("value");
+    var numberOfBathrooms = d3.select("#number_bathrooms").property("value");
+    var squareFootage = d3.select("#square_feet").property("value");
+    var interiorCondition = d3.select("#interior_condition").property("value");
+    var parkingSpaces = d3.select("#parking_spaces").property("value");
+    // Retrieve current year to calculate age
+    var currYear = new Date.getFullYear()
+    var yearBuilt = d3.select("#year_built").property("value");
+    var age = currYear - yearBuilt;
+
+    // Get regression Coefficients
+    var finishedBasementCoefficient = coefficientResults.full_finished_basement_Y;
+    var centralAirCoefficient = coefficientResults.central_air_Y;
+    var numberOfBedroomsCoefficient = coefficientResults.number_of_bedrooms;
+    var numberOfBathroomsCoefficient = coefficientResults.number_of_bathrooms;
+    var squareFootageCoefficient = coefficientResults.total_livable_area;
+    var interiorConditionCoefficient = coefficientResults.interior_condition;
+    var parkingSpacesCoefficient = coefficientResults.garage_spaces;
+    var ageCoefficient = coefficientResults.age
+
+    var regressionValuationResult = (finishedBasement * finishedBasementCoefficient) + 
+                                    (centralAir * centralAirCoefficient) + 
+                                    (numberOfBedrooms * numberOfBedroomsCoefficient) + 
+                                    (numberOfBathrooms * finishedBasementCoefficient) + 
+                                    (squareFootage * finishedBasementCoefficient) + 
+                                    (interiorCondition * finishedBasementCoefficient) + 
+                                    (parkingSpaces * finishedBasementCoefficient) + 
+                                    (age * ageCoefficient)
+
+    //  Number of Bedrooms
+
+    console.log(coefficientResults);
+    console.log(rSquaredResults);
+  });
+
+};
+
+
+// END: Function to perform all operations related to computing regression analysis
 // ----------
 
 // END: CODE TO EXECUTE UPON CALCULATING ANALYSIS
@@ -370,8 +437,8 @@ d3.select("#submit-button").on("click", function () {
   // Enable slickloader
   SlickLoader.enable();
 
-  // Run computePropertyAnalysis() function defined above
-  computePropertyAnalysis();
+  // Run computeCompsAnalysis() function defined above to calculate comp valuation
+  computeCompsAnalysis();
   
   // Disable slickloader
   // SlickLoader.disable();
