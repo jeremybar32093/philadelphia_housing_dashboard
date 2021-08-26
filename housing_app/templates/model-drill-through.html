@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta charset="UTF-8" />
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- Link to css files -->
+    <link rel="stylesheet" href="../static/css/model-drill-through.css" />
+
+    <link rel="stylesheet" href="../static/css/index.css" />
+
+    <link rel="stylesheet" href="../static/css/dashboard-pages.css" />
+
+    <!-- "Slick Loader" - loading gif - https://github.com/Zenoo/slick-loader -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://unpkg.com/slick-loader@1.1.20/slick-loader.min.css"
+    />
+    <script src="https://unpkg.com/slick-loader@1.1.20/slick-loader.min.js"></script>
+
+    <!-- Jquery/selectize js and css - for having "smartsearch" in filter boxes -->
+    <!-- See second answer from https://stackoverflow.com/questions/18796221/creating-a-select-box-with-a-search-option/57809086#57809086 -->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"
+      integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk="
+      crossorigin="anonymous"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css"
+      integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg="
+      crossorigin="anonymous"
+    />
+
+    <script>
+      $(document).ready(function () {
+        $("select").selectize({});
+      });
+    </script>
+
+    <!--Fonts-->
+    <link rel="stylesheet" href="https://use.typekit.net/tmf5pjw.css" />
+
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header class="header">
+      <button class="header_button" id="btnNav" type="button">
+        <i class="material-icons">menu</i>
+      </button>
+    </header>
+
+    <!--NAV BAR-->
+    <nav class="nav">
+      <div class="nav_links">
+        <a class="nav_link nav_link-active" href="/"> Dashboard </a>
+        <a href="comps" class="nav_link"> Comps Analysis </a>
+        <a class="nav_link" href="scatter"> Scatter Plot </a>
+        <a class="nav_link" href="line"> Line Chart </a>
+        <a class="nav_link" href="map"> Heat Map </a>
+      </div>
+      <div class="nav_overlay"></div>
+    </nav>
+
+    <main>
+      <h2>Housing Model Details</h2>
+      <p>View how the price of your selected property is calculated</p>
+    </main>
+
+    <div class="flexbox wrapper">
+      <div class="filter">
+        <h2>House Attributes</h2>
+        <p>Basement: {{ "Y" }}</p>
+        <p>Central Air: {{ "Y" }}</p>
+        <p>Number of Bedrooms: {{ 4 }}</p>
+        <p>Number of Bathrooms: {{ 2 }}</p>
+        <p>Square Footage: {{ 1200 }}</p>
+        <p>Interior Condition: {{ 2 }}</p>
+        <p>Number of Garage Spaces: {{ 1 }}</p>
+        <p>Age of Home: {{ 90 }}</p>
+        <p><strong>Sale Price: {{ 100000 }}</strong></p>
+
+        <h2>Formula</h2>
+        <p>
+          [Price of House] = [Basement]*[coeff_basement] + [C_air]*[coeff_air] +
+          [# of Bedrooms]*[coeff_beds] + [# of Bathrooms]*[coeff_baths] + [Sq
+          Footage]*[coeff_sq] + [condition]*[coeff_cond] + [# garage
+          spaces]*[coeff_garage] + [Age]*[coeff_age]
+        </p>
+      </div>
+
+      <div class="filter">
+        <h2>Regression Model Analysis</h2>
+        <img src="Regression_Model_Residuals.jpg" alt="Residuals Plot" />
+        <p>
+          In order to create our housing model, we had to feed the model data to
+          create its own formula for the price of a house. This plot shows the
+          residuals for each data point (the predicted price minus the actual
+          price) The values hover around the horizontal line, indicatng the data
+          is distributed. However, the downward-sloping nature of the data
+          indicates that there is a missing piece of information that could
+          improve the model drastically. For example,
+        </p>
+      </div>
+    </div>
+  </body>
+
+  <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+</html>
