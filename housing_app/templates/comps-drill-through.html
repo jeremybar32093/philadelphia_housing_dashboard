@@ -2,32 +2,50 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
+    <title>Comps Valuation Details</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta charset="UTF-8" />
+
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Comps Valuation</title>
 
-    <!-- Bootstrap CSS/Javascript -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../static/css/index.css">
 
-    <!-- Link to css files -->
-    <link rel="stylesheet" href="../static/css/comps-drill-through.css" />
+    <link rel="stylesheet" href="../static/css/dashboard.css">
+    
+    <link rel="stylesheet" href="../static/css/comps-drill-through.css">
 
-    <link rel="stylesheet" href="../static/css/dashboard.css" />
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+
+    <!-- Jquery/selectize js and css - for having "smartsearch" in filter boxes -->
+    <!-- See second answer from https://stackoverflow.com/questions/18796221/creating-a-select-box-with-a-search-option/57809086#57809086 -->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css" integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" />
+
+    <script>$(document).ready(function () {
+        $('select').selectize({});
+    });</script>
+
+    <!--Fonts-->
+    <link rel="stylesheet" href="https://use.typekit.net/tmf5pjw.css">
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 </head>
 
 <body class="preload">
-
-
     <header class="header">
         <button class="header_button" id="btnNav" type="button">
             <i class="material-icons">menu</i>
         </button>
     </header>
-    
-    
+
+
     <!--NAV BAR-->
     <nav class="nav">
         <div class="nav_links">
@@ -50,69 +68,76 @@
         <div class="nav_overlay"></div>
     </nav>
 
+    <div class="container">
+        <div class="row">
+            <div class=".col-6 .col-md-4">
+                <div id="selected-property">
+                    <h5>Target Property Insights:</h5>
+                    <p>View how your target property compares to other properties in the area</p>
+                    <ul>
+                        <li>Selected address: {{ selected_address }}</li>
+                        <li>Selected zip code: {{ selected_zip_code }}</li>
+                        <li>Target square footage: {{ target_square_footage }} ft sq.</li>
+                    </ul>
+                </div>
+            </div>
 
-    <table>
-        <tr>
-            <th>Selected address</th>
-            <th>Selected zip code</th>
-            <th>Target square footage</th>
-        </tr>
-        <tr>
-            <td>{{ selected_address }}</td>
-            <td>{{ selected_zip_code }}</td>
-            <td>{{ target_square_footage }}</td>
-        </tr>
-    </table>
+            <br><br>
+            <hr class="my-4">
 
-    <br><br>
-
-    <h5>Comps Valuation</h5>
-
-    <table>
-        <tr>
-            <th>&nbsp;</th>
-            <th>Square Footage</th>
-            <th>Sale Price</th>
-        </tr>
-        <tr>
-            <td>Comp 1</td>
-            <td>{{ comp_1_square_footage }}</td>
-            <td>{{ comp_1_sale_price }}</td>
-        </tr>
-        <tr>
-            <td>Comp 2</td>
-            <td>{{ comp_2_square_footage }}</td>
-            <td>{{ comp_2_sale_price }}</td>
-
-        </tr>
-        <tr>
-            <td>Comp 3</td>
-            <td>{{ comp_3_square_footage }}</td>
-            <td>{{ comp_3_sale_price }}</td>
-
-        </tr>
-        <tr>
-            <td>Comp 4</td>
-            <td>{{ comp_4_square_footage }}</td>
-            <td>{{ comp_4_sale_price }}</td>
-
-        </tr>
-        <tr>
-            <td>Comp 5</td>
-            <td>{{ comp_5_square_footage }}</td>
-            <td>{{ comp_5_sale_price }}</td>
-        </tr>
-        <tr>
-            <th>Total</th>
-            <td></td>
-            <td>
-        </tr>
-    </table>
-
-    <br><br>
-
-    <b>Average Price/Sq. Ft. =</b>
-
+            <div class=".col-12 .col-md-8">
+                <h5>Comps Valuation</h5>
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">&nbsp;</th>
+                            <th scope="col">Square Footage</th>
+                            <th scope="col">Sale Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Comp 1</td>
+                            <td id="comp-square-footage">{{ comp_1_square_footage }} ft sq.</td>
+                            <td id="sale price">$ {{ comp_1_sale_price }}</td>
+                        </tr>
+                        <tr>
+                            <td>Comp 2</td>
+                            <td id="comp-square-footage">{{ comp_2_square_footage }} ft sq.</td>
+                            <td id="sale price">$ {{ comp_2_sale_price }}</td>
+                        </tr>
+                        <tr>
+                            <td>Comp 3</td>
+                            <td id="comp-square-footage">{{ comp_3_square_footage }} ft sq.</td>
+                            <td id="sale price">$ {{ comp_3_sale_price }}</td>
+                        </tr>
+                        <tr>
+                            <td>Comp 4</td>
+                            <td id="comp-square-footage">{{ comp_4_square_footage }} ft sq.</td>
+                            <td id="sale price">$ {{ comp_4_sale_price }}</td>
+                        </tr>
+                        <tr>
+                            <td>Comp 5</td>
+                            <td id="comp-square-footage">{{ comp_5_square_footage }} ft sq.</td>
+                            <td id="sale price">$ {{ comp_5_sale_price }}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Average Valuation</b></td>
+                            <td id="overall-result">{{ {{ {{ comp_1_square_footage }} + {{ comp_2_square_footage }} + {{ comp_3_square_footage }} + {{ comp_4_square_footage }} + {{ comp_5_square_footage }} }} / 5}} ft sq.</td>
+                            <td id="overall-result">$ {{ {{ {{ comp_1_sale_price }} + {{ comp_2_sale_price }} + {{ comp_3_sale_price }} + {{ comp_4_sale_price }} + {{ comp_5_sale_price }} }} / 5}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div>
+                <h5>Comps Valuation Analysis</h5>
+                    <p>The average price per square/ft for a property in your target area is <b>$ {{ {{ {{ {{ comp_1_sale_price }} + {{ comp_2_sale_price }} + {{ comp_3_sale_price }} + {{ comp_4_sale_price }} + {{ comp_5_sale_price }} }} / 5}} / {{ {{ {{ comp_1_square_footage }} + {{ comp_2_square_footage }} + {{ comp_3_square_footage }} + {{ comp_4_square_footage }} + {{ comp_5_square_footage }} }} / 5}} }}</b>.</p>
+                    <br>
+                    <p>This page shows the square footage and sale price for 5 comparable properties in the target properties area.</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 <!-- Script for d3 -->
@@ -122,6 +147,7 @@
 <script src="{{ url_for('static', filename='js/config.js') }}"></script>
 <script src="{{ url_for('static', filename='js/analyzer.js') }}"></script>
 
-
+<script src="../static/js/dashboard.js"></script>
+<script src="../static/js/dashboard_calcs.js"></script>
 
 </html>
