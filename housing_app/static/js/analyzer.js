@@ -155,10 +155,6 @@ accessToken: API_KEY
 // 3a.) Function to perform all operations related to computing comps analysis
 
 function computeCompsAnalysis() {
-
-    // SlickLoader.enable();
-
-    // d3.event.preventDefault();
   
     // Retrieve parameters entered in property address section
     var streetAddress = d3.select("#address").property("value");
@@ -356,8 +352,6 @@ function computeCompsAnalysis() {
       compsURL.attr("href",compsURLNewHref);
 
       });
-
-      // SlickLoader.disable();
     
 };
     
@@ -378,6 +372,7 @@ function computeRegressionAnalysis() {
   Promise.all([coefficientsPromise, rSquaredPromise]).then(values => {
     var coefficientResults = values[0];
     var rSquaredResults = values[1];
+    console.log(rSquaredResults);
 
     // Get inputs to be used in regression calculations
     var finishedBasement = d3.select("#finished_basement").property("value");
@@ -449,8 +444,9 @@ function computeRegressionAnalysis() {
     var interiorConditionCoefficientRounded = Math.round(interiorConditionCoefficient * 10000) / 10000;
     var parkingSpacesCoefficientRounded = Math.round(parkingSpacesCoefficient * 10000) / 10000;
     var ageCoefficientRounded = Math.round(ageCoefficient * 10000) / 10000;
+    var rSquaredRounded = Math.round(rSquaredResults[0].rsquared * 10000) / 10000;
 
-    regressionURLNewHref = `/model-drill-through/${finishedBasement}/${centralAir}/${numberOfBedrooms}/${numberOfBathrooms}/${squareFootage}/${interiorCondition}/${parkingSpaces}/${age}/${Math.round(regressionValuation)}/${finishedBasementCoefficientRounded}/${centralAirCoefficientRounded}/${numberOfBedroomsCoefficientRounded}/${numberOfBathroomsCoefficientRounded}/${squareFootageCoefficientRounded}/${interiorConditionCoefficientRounded}/${parkingSpacesCoefficientRounded}/${ageCoefficientRounded}`;
+    regressionURLNewHref = `/model-drill-through/${finishedBasement}/${centralAir}/${numberOfBedrooms}/${numberOfBathrooms}/${squareFootage}/${interiorCondition}/${parkingSpaces}/${age}/${Math.round(regressionValuation)}/${finishedBasementCoefficientRounded}/${centralAirCoefficientRounded}/${numberOfBedroomsCoefficientRounded}/${numberOfBathroomsCoefficientRounded}/${squareFootageCoefficientRounded}/${interiorConditionCoefficientRounded}/${parkingSpacesCoefficientRounded}/${ageCoefficientRounded}/${rSquaredRounded}`;
     regressionURL.attr("href",regressionURLNewHref);
 
     // Calculate overall valuation using r^2 as weight
@@ -548,6 +544,7 @@ d3.select("#submit-button").on("click", function () {
   
   // Enable slickloader
   SlickLoader.enable();
+  d3.event.preventDefault();
 
   // Run computeCompsAnalysis() function defined above to calculate comp valuation
   computeCompsAnalysis();
