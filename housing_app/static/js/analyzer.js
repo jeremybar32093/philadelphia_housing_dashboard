@@ -388,7 +388,8 @@ function computeRegressionAnalysis() {
     var interiorCondition = d3.select("#interior_condition").property("value");
     var parkingSpaces = d3.select("#parking_spaces").property("value");
     // Retrieve current year to calculate age
-    var currYear = new Date.getFullYear()
+    var currDate = new Date()
+    var currYear = currDate.getFullYear()
     var yearBuilt = d3.select("#year_built").property("value");
     var age = currYear - yearBuilt;
 
@@ -402,19 +403,57 @@ function computeRegressionAnalysis() {
     var parkingSpacesCoefficient = coefficientResults.garage_spaces;
     var ageCoefficient = coefficientResults.age
 
-    var regressionValuationResult = (finishedBasement * finishedBasementCoefficient) + 
+    // Calculate regression valuation based off of retrieved coefficients
+    var regressionValuation = (finishedBasement * finishedBasementCoefficient) + 
                                     (centralAir * centralAirCoefficient) + 
                                     (numberOfBedrooms * numberOfBedroomsCoefficient) + 
-                                    (numberOfBathrooms * finishedBasementCoefficient) + 
-                                    (squareFootage * finishedBasementCoefficient) + 
-                                    (interiorCondition * finishedBasementCoefficient) + 
-                                    (parkingSpaces * finishedBasementCoefficient) + 
+                                    (numberOfBathrooms * numberOfBathroomsCoefficient) + 
+                                    (squareFootage * squareFootageCoefficient) + 
+                                    (interiorCondition * interiorConditionCoefficient) + 
+                                    (parkingSpaces * parkingSpacesCoefficient) + 
                                     (age * ageCoefficient)
 
-    //  Number of Bedrooms
+    // Populate HTML table with regression valuation results
+    var regressionValuationResult = d3.select("#regression-valuation-result");
+    var formatComma = d3.format(",");
+    regressionValuationResult.text(`$${formatComma(Math.round(regressionValuation))}`);
 
-    console.log(coefficientResults);
-    console.log(rSquaredResults);
+    // Compare regression valuation result to entered list price
+    var listPrice = d3.select("#list_price").property("value");
+    var regressionVsListPriceDiff = regressionValuation - listPrice;
+    var regressionVsListPriceDiffResult = d3.select("#regression-valuation-over-under");
+    var formatCurrency = d3.format("(,");
+    regressionVsListPriceDiffResult.text(`$${formatCurrency(Math.round(regressionVsListPriceDiff))}`);
+
+
+    // Retrieve parameters to be used in monthly mortgage payment calculations
+    var inputDownPayment = d3.select("#down_payment").property("value");
+    var inputInterestRate = d3.select("#interest_rate").property("value");
+    var inputMortgageLength = d3.select("#mortgage_length").property("value");
+
+    // Calculate monthly payment based on regression valuation
+    var regressionValuationMonthlyPayment = calcMonthlyPayment(regressionValuation, inputDownPayment, inputInterestRate, inputMortgageLength);
+    var regressionValuationMonthlyPaymentResult = d3.select("#regression-valuation-monthly-payment");
+    regressionValuationMonthlyPaymentResult.text(`$${formatComma(Math.round(regressionValuationMonthlyPayment))}`);
+
+    // Update hrefs of URLs to take in relevant output results
+    // Declare relevant output variables to be passed into drill-through URL
+    var regressionURL = d3.select("#regression-valuation-href");
+
+    // Round regression coefficients to 4 decimals to bring into drill through
+    var finishedBasementCoefficientRounded = Math.round(finishedBasementCoefficient * 10000) / 10000
+    var centralAirCoefficientRounded = Math.round(centralAirCoefficient * 10000) / 10000;
+    var numberOfBedroomsCoefficientRounded = Math.round(numberOfBedroomsCoefficient * 10000) / 10000;
+    var numberOfBathroomsCoefficientRounded = Math.round(numberOfBathroomsCoefficient * 10000) / 10000;
+    var squareFootageCoefficientRounded = Math.round(squareFootageCoefficient * 10000) / 10000;
+    var interiorConditionCoefficientRounded = Math.round(interiorConditionCoefficient * 10000) / 10000;
+    var parkingSpacesCoefficientRounded = Math.round(parkingSpacesCoefficient * 10000) / 10000;
+    var ageCoefficientRounded = Math.round(ageCoefficient * 10000) / 10000;
+
+    regressionURLNewHref = `/model-drill-through/${finishedBasement}/${centralAir}/${numberOfBedrooms}/${numberOfBathrooms}/${squareFootage}/${interiorCondition}/${parkingSpaces}/${age}/${Math.round(regressionValuation)}/${finishedBasementCoefficientRounded}/${centralAirCoefficientRounded}/${numberOfBedroomsCoefficientRounded}/${numberOfBathroomsCoefficientRounded}/${squareFootageCoefficientRounded}/${interiorConditionCoefficientRounded}/${parkingSpacesCoefficientRounded}/${ageCoefficientRounded}`;
+    regressionURL.attr("href",regressionURLNewHref);
+
+    // *** LEFT OFF HERE: Populate html table, calculate monthly payment, add to event listener, calculate drill through params
   });
 
 };
@@ -439,9 +478,12 @@ d3.select("#submit-button").on("click", function () {
 
   // Run computeCompsAnalysis() function defined above to calculate comp valuation
   computeCompsAnalysis();
+
+  // Run computeRegressionAnalysis() function defined above to calculate regression valuation
+  computeRegressionAnalysis();
   
   // Disable slickloader
-  // SlickLoader.disable();
+  SlickLoader.disable();
 });
 
 // END: Event listener for pressing "Compute Property Analysis" button

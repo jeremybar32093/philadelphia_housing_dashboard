@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Regression Model Details</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <meta charset="UTF-8" />
@@ -12,11 +12,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
     <!-- Link to css files -->
-    <link rel="stylesheet" href="../static/css/model-drill-through.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/model-drill-through.css') }}" />
 
-    <link rel="stylesheet" href="../static/css/index.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}" />
 
-    <link rel="stylesheet" href="../static/css/dashboard-pages.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard-pages.css') }}" />
 
     <!-- "Slick Loader" - loading gif - https://github.com/Zenoo/slick-loader -->
     <link
@@ -83,23 +83,27 @@
     <div class="flexbox wrapper">
       <div class="filter">
         <h2>House Attributes</h2>
-        <p>Basement: {{ "Y" }}</p>
-        <p>Central Air: {{ "Y" }}</p>
-        <p>Number of Bedrooms: {{ 4 }}</p>
-        <p>Number of Bathrooms: {{ 2 }}</p>
-        <p>Square Footage: {{ 1200 }}</p>
-        <p>Interior Condition: {{ 2 }}</p>
-        <p>Number of Garage Spaces: {{ 1 }}</p>
-        <p>Age of Home: {{ 90 }}</p>
-        <p><strong>Sale Price: {{ 100000 }}</strong></p>
+        <p>Basement: {{ finished_basement }}</p>
+        <p>Central Air: {{ central_air }}</p>
+        <p>Number of Bedrooms: {{ number_of_bedrooms }}</p>
+        <p>Number of Bathrooms: {{ number_of_bathrooms }}</p>
+        <p>Square Footage: {{ square_footage }}</p>
+        <p>Interior Condition: {{ interior_condition }}</p>
+        <p>Number of Garage Spaces: {{ parking_spaces }}</p>
+        <p>Age of Home: {{ age }}</p>
+        <p><strong>Sale Price: ${{ regression_valuation }}</strong></p>
 
         <h2>Formula</h2>
         <p>
-          [Price of House] = [Basement]*[coeff_basement] + [C_air]*[coeff_air] +
-          [# of Bedrooms]*[coeff_beds] + [# of Bathrooms]*[coeff_baths] + [Sq
-          Footage]*[coeff_sq] + [condition]*[coeff_cond] + [# garage
-          spaces]*[coeff_garage] + [Age]*[coeff_age]
+          <strong>${{ regression_valuation }}</strong> = {{ finished_basement }}*[coeff_basement] + {{ central_air }}*[coeff_air] +
+          {{ number_of_bedrooms }}*[coeff_beds] + {{ number_of_bathrooms }}*[coeff_baths] + {{ square_footage }}*[coeff_sq] + {{ interior_condition }}*[coeff_cond] + {{ parking_spaces }}*[coeff_garage] + {{ age }}*[coeff_age]
         </p>
+
+        <p>
+          <strong>${{ regression_valuation }}</strong> = {{ finished_basement }}*{{ finished_basement_coef }} + {{ central_air }}*{{ central_air_coef }} +
+          {{ number_of_bedrooms }}*{{ number_bedrooms_coef }} + {{ number_of_bathrooms }}* {{ number_bathrooms_coef }} + {{ square_footage }}*{{ square_footage_coef }} + {{ interior_condition }}*{{ interior_condition_coef }} + {{ parking_spaces }}*{{ parking_spaces_coef }} + {{ age }}*{{ age_coef }}
+        </p>
+
       </div>
 
       <div class="filter">

@@ -203,9 +203,27 @@ def comps_drill_through(selected_address, selected_zip_code, target_square_foota
                             comp_5_sale_price = comp_5_sale_price)
 
 
-@app.route("/model-drill-through/")
-def model_drill_through():
-    return render_template("model-drill-through.html")
+@app.route("/model-drill-through/<finished_basement>/<central_air>/<number_of_bedrooms>/<number_of_bathrooms>/<square_footage>/<interior_condition>/<parking_spaces>/<age>/<regression_valuation>/<finished_basement_coef>/<central_air_coef>/<number_bedrooms_coef>/<number_bathrooms_coef>/<square_footage_coef>/<interior_condition_coef>/<parking_spaces_coef>/<age_coef>")
+def model_drill_through(finished_basement, central_air, number_of_bedrooms, number_of_bathrooms, square_footage, interior_condition, parking_spaces, age, regression_valuation, finished_basement_coef, central_air_coef, number_bedrooms_coef, number_bathrooms_coef, square_footage_coef, interior_condition_coef, parking_spaces_coef, age_coef):
+    return render_template("model-drill-through.html", 
+                            finished_basement = finished_basement,
+                            central_air = central_air,
+                            number_of_bedrooms = number_of_bedrooms,
+                            number_of_bathrooms = number_of_bathrooms,
+                            square_footage = square_footage,
+                            interior_condition = interior_condition,
+                            parking_spaces = parking_spaces,
+                            age = age,
+                            regression_valuation = regression_valuation,
+                            finished_basement_coef = finished_basement_coef,
+                            central_air_coef = central_air_coef,
+                            number_bedrooms_coef = number_bedrooms_coef,
+                            number_bathrooms_coef = number_bathrooms_coef,
+                            square_footage_coef = square_footage_coef,
+                            interior_condition_coef = interior_condition_coef,
+                            parking_spaces_coef = parking_spaces_coef,
+                            age_coef = age_coef
+                            )
 
 # api route to be able to render full dataset using d3.json
 @app.route("/api/v1.0/data")
