@@ -521,10 +521,28 @@ function computeOverallValuation() {
 // -----------------------------------
 
 // -----------------------------------
-// 4.) EVENT LISTENERS
+// 4.) Supplemental Web Scrape Functions
+
+// ----------
+// 4a.) Scrape 30 year fixed rate from Freddie Mac
+function scrapeInterestRate() {
+  var queryURL = "/api/v1.0/data/interest_rate";
+  d3.json(queryURL).then(function(response) {
+    var interestRate = response[0].thirty_yr_rate;
+    var interestRateInput = d3.select("#interest_rate");
+    interestRateInput.property("value",interestRate);
+
+  })
+}
 
 // ----------
 
+// -----------------------------------
+
+// -----------------------------------
+// 4.) EVENT LISTENERS
+
+// ----------
 // 4a.) Event listener for pressing "Compute Property Analysis" button
 d3.select("#submit-button").on("click", function () {
   
@@ -576,6 +594,19 @@ d3.select("#overall-valuation-href").on("click", function () {
     SlickLoader.disable();
 })
 // ----------
+
+// 4d.) Function to scrape interest rate from Freddie Mac
+d3.select("#freddie-mac-scrape").on("click", function () {
+
+  // Enable slickloader
+  SlickLoader.enable();
+
+  scrapeInterestRate();
+
+  // Disable slickloader
+  SlickLoader.disable();
+
+})
 
 // END: EVENT LISTENERS
 // -----------------------------------

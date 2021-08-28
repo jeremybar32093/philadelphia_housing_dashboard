@@ -17,6 +17,10 @@ from sqlalchemy.sql.expression import select
 import requests
 import json
 import urllib
+from splinter import Browser
+from bs4 import BeautifulSoup as bs
+import time
+from webdriver_manager.chrome import ChromeDriverManager
 # from flask_sqlalchemy import SQLAlchemy
 
 #################################################
@@ -519,6 +523,40 @@ def rsquared():
         
 
     return jsonify(r2_list)
+
+# route to pull interest rate from freddie mac site
+@app.route("/api/v1.0/data/interest_rate")
+def interest_rate():
+    # Splinter settings
+    executable_path = {'executable_path': ChromeDriverManager().install()}
+    browser = Browser('chrome', **executable_path, headless=True)
+
+    # Visit Freddie Mac site and create beautiful soup object
+    url = 'http://www.freddiemac.com/pmms/'
+    browser.visit(url)
+    html = browser.html
+    soup = bs(html, "html.parser")
+
+    # Pull div that contains 30 year interest rate
+    interest_rate_div = soup.find('div', class_='mortgage-rate-widget__rate-value')
+
+    # Parse to pull numeric value from result
+    text_value = interest_rate_div.get_text()
+    numeric_value = float(text_value.replace("%","")) / 100
+
+    # Put result into list and jsonify
+    interest_rate_list = []
+    interest_rate_dict = {}
+    interest_rate_dict["thirty_yr_rate"] = numeric_value
+    interest_rate_list.append(interest_rate_dict)
+    print(interest_rate_list)
+
+    browser.quit()
+
+    return jsonify(interest_rate_list)
+        
+
+    
 
 
 
