@@ -276,23 +276,23 @@
                 <hr class="my-4">
                 <!-- Insights -->
                 <div id="insights-section">
-                    <h5>Insights: </h5>
+                    <h5 id="insights-header" class="hidden">Insights: </h5>
                     <ul>
-                        <li>The overall valuation came in at <span>[XXX]%</span> <span>[above/below]</span> the current listing price</li>
-                        <li>[If above] Selected property may be undervalued, and potentially listed by a motivated seller
+                        <li class="hidden" id="insights-overall-valuation">The overall valuation came in at <span id="overall-vs-list-percent">[XXX]%</span> <span id="above-below-list">[above/below]</span> the current listing price</li>
+                        <li class="hidden" id="insights-above-listing">Selected property may be undervalued, and potentially listed by a motivated seller
                             <ul>
                                 <li><em>You may have found a diamond in the rough! If it IS a motivated seller, there may be opportunity to negotiate down even more!</em></li>
                             </ul>
                         </li>
-                        <li>[If below] Selected property may be overvalued and there may be room to negotiate down. If bought at valuation, you could achieve:
-                            <ul>
+                        <li class="hidden" id="insights-below-listing"><em>Selected property may be overvalued and there may be room to negotiate down!</em>
+                            <!-- <ul>
                                 <li><span>$[XXX]</span> reduction in monthly payment</li>
                                 <li><span>$[XXX]</span> reduction in down payment for the same monthly payment result</li>
                                 <li>Pay <span>[XXX]%</span> higher interest rate for same monthly payment</li>
                                 <li>Shave <span>[XXX]</span> years off of mortgage length to achieve same monthly payment</li>
-                            </ul>
+                            </ul> -->
                         </li>
-                        <li>[If on par - maybe use certain % threshold] Listing price is on par with calculated propery valuation.</li>
+                        <li class="hidden" id="insights-on-par-listing">Listing price is on par with calculated propery valuation.</li>
                     </ul>
 
                 </div>

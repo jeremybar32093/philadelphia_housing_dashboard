@@ -509,6 +509,52 @@ function computeOverallValuation() {
       var overallVsListPriceDiffResult = d3.select("#overall-valuation-over-under");
       var formatCurrency = d3.format("(,");
       overallVsListPriceDiffResult.text(`$${formatCurrency(Math.round(overallVsListPriceDiff))}`);
+
+      // Update display in "insights" section
+      var overallVsListPriceDiffPercent = overallVsListPriceDiff / listPrice;
+      var overallVsListPriceDiffPercentScaled = overallVsListPriceDiffPercent * 100
+      var overallVsListPriceDiffPercentRounded = Math.round(overallVsListPriceDiffPercentScaled * 100) / 100;
+      
+      // Unhide insights section header
+      var insightsHeader = d3.select("#insights-header");
+      insightsHeader.classed("hidden", false);
+
+      // Drive bulletpoints shown based off of whether or not overallValuation is greater or less than list price
+
+      if (overallValuation > listPrice) {
+
+        var overallValuationLine = d3.select("#insights-overall-valuation");
+        overallValuationLine.classed("hidden", false);
+        
+        var overallVsListPercent = d3.select("#overall-vs-list-percent");
+        overallVsListPercent.text(`${Math.round(overallVsListPriceDiffPercentRounded)}%`);
+
+        var aboveBelowList = d3.select("#above-below-list")
+        aboveBelowList.text("above");
+
+        var insightsAboveListing = d3.select("#insights-above-listing");
+        insightsAboveListing.classed("hidden",false);
+
+      } else if (overallValuation < listPrice) {
+
+        var overallValuationLine = d3.select("#insights-overall-valuation");
+        overallValuationLine.classed("hidden", false);
+
+        var overallVsListPercent = d3.select("#overall-vs-list-percent");
+        overallVsListPercent.text(`${Math.abs(Math.round(overallVsListPriceDiffPercentRounded))}%`);
+        
+        var aboveBelowList = d3.select("#above-below-list")
+        aboveBelowList.text("below");
+
+        var insightsBelowListing = d3.select("#insights-below-listing");
+        insightsBelowListing.classed("hidden", false);
+
+      } else {
+        var equalValuationLine = d3.select("#insights-on-par-listing");
+        equalValuationLine.classed("hidden", false);
+
+      }
+
     });
 }
 // ----------
