@@ -87,36 +87,36 @@
         <p>Central Air: {{ central_air }}</p>
         <p>Number of Bedrooms: {{ number_of_bedrooms }}</p>
         <p>Number of Bathrooms: {{ number_of_bathrooms }}</p>
-        <p>Square Footage: {{ square_footage }}</p>
+        <p>Square Footage: {{ "{:,.0f}".format(square_footage | float) }}</p>
         <p>Interior Condition: {{ interior_condition }}</p>
         <p>Number of Garage Spaces: {{ parking_spaces }}</p>
         <p>Age of Home: {{ age }}</p>
-        <p><strong>Sale Price: ${{ regression_valuation }}</strong></p>
+        <p><strong>Sale Price: {{ "${:,.0f}".format(regression_valuation | float) }}</strong></p>
 
         <h2>Formula</h2>
         <p>
-          <strong>${{ regression_valuation }}</strong> = {{ finished_basement }}*[coeff_basement] + {{ central_air }}*[coeff_air] +
+          <strong>{{ "${:,.0f}".format(regression_valuation | float) }}</strong> = {{ finished_basement }}*[coeff_basement] + {{ central_air }}*[coeff_air] +
           {{ number_of_bedrooms }}*[coeff_beds] + {{ number_of_bathrooms }}*[coeff_baths] + {{ square_footage }}*[coeff_sq] + {{ interior_condition }}*[coeff_cond] + {{ parking_spaces }}*[coeff_garage] + {{ age }}*[coeff_age]
         </p>
 
         <p>
-          <strong>${{ regression_valuation }}</strong> = {{ finished_basement }}*{{ finished_basement_coef }} + {{ central_air }}*{{ central_air_coef }} +
+          <strong>{{ "${:,.0f}".format(regression_valuation | float) }}</strong> = {{ finished_basement }}*{{ finished_basement_coef }} + {{ central_air }}*{{ central_air_coef }} +
           {{ number_of_bedrooms }}*{{ number_bedrooms_coef }} + {{ number_of_bathrooms }}* {{ number_bathrooms_coef }} + {{ square_footage }}*{{ square_footage_coef }} + {{ interior_condition }}*{{ interior_condition_coef }} + {{ parking_spaces }}*{{ parking_spaces_coef }} + {{ age }}*{{ age_coef }}
         </p>
 
       </div>
 
       <div class="filter">
-        <h2>Regression Model Analysis</h2>
-        <img src="Regression_Model_Residuals.jpg" alt="Residuals Plot" />
+        <h2>Model Accuracy Analysis</h2>
+        <img src="{{ url_for('static', filename='images/model_residual_plot.png') }}" alt="Residuals Plot" />
         <p>
-          In order to create our housing model, we had to feed the model data to
-          create its own formula for the price of a house. This plot shows the
-          residuals for each data point (the predicted price minus the actual
-          price) The values hover around the horizontal line, indicatng the data
-          is distributed. However, the downward-sloping nature of the data
-          indicates that there is a missing piece of information that could
-          improve the model drastically. For example,
+          The above image displays what is known as a <strong>residuals plot</strong>. This plot simply graphs the predicted versus the actual results of the regression model.
+          An accurate model will show residual points hovering around zero on the y-axis. In the case of this plot, there are some deviations from zero, especially in the areas highlighted 
+          with the red circles. These outliars on the residuals plot are an indicator that the model may be missing some key information to perform its prediction. 
+        </p>
+        <p>The model achieved an r<sup>2</sup> value of {{ rsquared }}, meaning that approximately {{ ((rsquared | float) * 100)|round(2) }}% of the variation in home sale prices can be explained by the predictors used in the model.
+           If the model ingested additional information, perhaps such as proximity to parks/shops, demographic information, or school district information, it could produce a better result. 
+           Further research and experimentation (and of course, more data!) would be needed to improve this model's prediction capability.
         </p>
       </div>
     </div>
