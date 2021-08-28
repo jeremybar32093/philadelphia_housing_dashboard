@@ -453,13 +453,68 @@ function computeRegressionAnalysis() {
     regressionURLNewHref = `/model-drill-through/${finishedBasement}/${centralAir}/${numberOfBedrooms}/${numberOfBathrooms}/${squareFootage}/${interiorCondition}/${parkingSpaces}/${age}/${Math.round(regressionValuation)}/${finishedBasementCoefficientRounded}/${centralAirCoefficientRounded}/${numberOfBedroomsCoefficientRounded}/${numberOfBathroomsCoefficientRounded}/${squareFootageCoefficientRounded}/${interiorConditionCoefficientRounded}/${parkingSpacesCoefficientRounded}/${ageCoefficientRounded}`;
     regressionURL.attr("href",regressionURLNewHref);
 
-    // *** LEFT OFF HERE: Populate html table, calculate monthly payment, add to event listener, calculate drill through params
+    // Calculate overall valuation using r^2 as weight
+    // var rSquared = rSquaredResults.rsquared;
+    // var oneMinusRSquared = 1 - rSquared;
+
+    // var compsValuation = d3.select("#comp-valuation-result").text();
+    // var compsValuationFloat = parseFloat(compsValuation.replace("$","").replace(",",""));
+    // var compsValuationWeighted = compsValuationFloat * oneMinusRSquared;
+
+    // var regressionValuationWeighted = regressionValuation * rSquared;
+    // var overallValuation = compsValuationWeighted + regressionValuationWeighted;
+
+    // // Populate overall valuation into html table
+    // var overallValuationResult = d3.select("#overall-valuation-result");
+    // overallValuationResult.text(`$${formatComma(Math.round(overallValuation))}`);
+
+    // // Compare overall valuation result to entered list price
+    // var overallVsListPriceDiff = overallValuation - listPrice;
+    // var overallVsListPriceDiffResult = d3.select("#overall-valuation-over-under");
+    // var formatCurrency = d3.format("(,");
+    // overallVsListPriceDiffResult.text(`$${formatCurrency(Math.round(overallVsListPriceDiff))}`);
+
   });
 
 };
 
 
 // END: Function to perform all operations related to computing regression analysis
+// ----------
+
+// ----------
+// 3c.) Function to compute overall valuation and insights section
+function computeOverallValuation() {
+    // Create JSON promise for regression r^2
+    var rSquaredPromise = getRegressionRSquared();
+
+    rSquaredPromise.then(function(response) {
+      var listPrice = d3.select("#list_price").property("value");
+      var rSquared = response[0].rsquared;
+      console.log(rSquared);
+      var oneMinusRSquared = 1 - rSquared;
+
+      var compsValuation = d3.select("#comp-valuation-result").text();
+      var compsValuationFloat = parseFloat(compsValuation.replace("$","").replace(",",""));
+      var compsValuationWeighted = compsValuationFloat * oneMinusRSquared;
+
+      var regressionValuation = d3.select("#regression-valuation-result").text();
+      var regressionValuationFloat = parseFloat(regressionValuation.replace("$","").replace(",",""));
+      var regressionValuationWeighted = regressionValuationFloat * rSquared;
+      var overallValuation = compsValuationWeighted + regressionValuationWeighted;
+
+      // Populate overall valuation into html table
+      var formatComma = d3.format(",");
+      var overallValuationResult = d3.select("#overall-valuation-result");
+      overallValuationResult.text(`$${formatComma(Math.round(overallValuation))}`);
+
+      // Compare overall valuation result to entered list price
+      var overallVsListPriceDiff = overallValuation - listPrice;
+      var overallVsListPriceDiffResult = d3.select("#overall-valuation-over-under");
+      var formatCurrency = d3.format("(,");
+      overallVsListPriceDiffResult.text(`$${formatCurrency(Math.round(overallVsListPriceDiff))}`);
+    });
+}
 // ----------
 
 // END: CODE TO EXECUTE UPON CALCULATING ANALYSIS
@@ -504,6 +559,22 @@ d3.select("#reset-button").on("click", function() {
 });
 
 // END: Button to reset page
+// ----------
+
+// ----------
+// 4c.) Link to calculate overall valuation
+// NOTE: ideally would calculate without having to click extra
+// Issue is that comp valuation result doesn't return back before regression due to asynchronous processing
+// So this is just a workaround for now
+d3.select("#overall-valuation-href").on("click", function () {
+    // Enable slickloader
+    SlickLoader.enable();
+
+    computeOverallValuation();
+
+    // Disable slickloader
+    SlickLoader.disable();
+})
 // ----------
 
 // END: EVENT LISTENERS
